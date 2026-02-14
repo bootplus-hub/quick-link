@@ -3,6 +3,7 @@ import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } fro
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command'
 import { useMagicKeys, useColorMode } from '@vueuse/core'
 import { ref, watch } from 'vue'
+import Main from '@views/Main.vue';
 
 const mode = useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -23,9 +24,9 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
 
 <template>
   <div class="flex flex-col h-screen overflow-hidden">
-    <header 
+    <header
       class="fixed start-0 top-0 flex h-10 w-full items-center justify-between border-b bg-background/80 backdrop-blur-md select-none"
-      style="-webkit-app-region: drag" 
+      style="-webkit-app-region: drag"
     >
       <div class="flex items-center px-4" style="-webkit-app-region: no-drag">
         <Menubar class="border-none bg-transparent shadow-none">
@@ -39,7 +40,7 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
         </Menubar>
       </div>
 
-      <div 
+      <div
         class="flex h-7 w-64 items-center justify-between rounded-md border bg-muted px-3 text-xs text-muted-foreground cursor-pointer hover:bg-accent"
         style="-webkit-app-region: no-drag"
         @click="open = true"
@@ -50,12 +51,10 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
         </kbd>
       </div>
 
-      <div class="w-35"></div> 
+      <div class="w-35"></div>
     </header>
 
-    <main class="flex-1 p-4">
-      <router-view />
-    </main>
+    <Main />
 
     <CommandDialog v-model:open="open">
       <CommandInput placeholder="Type a command or search..." />
