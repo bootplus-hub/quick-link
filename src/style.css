@@ -134,4 +134,18 @@
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+  /*스크롤바*/
+  ::-webkit-scrollbar {
+    width: 6px; /* 세로 스크롤 폭 */
+    height: 6px; /* 가로 스크롤 높이 */
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
 }
