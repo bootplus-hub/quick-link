@@ -65,7 +65,7 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
 
       </div>
 
-      <div class="w-45"></div>
+      <div class="w-50"></div>
     </header>
 
     <Main></Main>
