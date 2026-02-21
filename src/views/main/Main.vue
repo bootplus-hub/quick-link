@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
-import MainFavorites from "./MainFavorites.vue";
 </script>
 
 <template>
@@ -13,7 +12,7 @@ import MainFavorites from "./MainFavorites.vue";
         <TabsTrigger value="edu" class="text-xs">교육</TabsTrigger>
       </TabsList>
       <TabsContent value="user" class="text-xs">
-        <MainFavorites></MainFavorites>
+        <router-view />
       </TabsContent>
       <TabsContent value="biz" class="text-xs">
       </TabsContent>
