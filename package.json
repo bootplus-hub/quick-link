@@ -13,14 +13,16 @@
     "@vueuse/core": "^14.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "lodash": "^4.17.23",
     "lucide-vue-next": "^0.563.0",
-    "reka-ui": "^2.8.0",
+    "reka-ui": "^2.8.2",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "vue": "^3.4.21",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.23",
     "@vitejs/plugin-vue": "^5.0.4",
     "electron": "^30.0.1",
     "electron-builder": "^24.13.3",
