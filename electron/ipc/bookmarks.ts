@@ -11,7 +11,7 @@ async function getEdgeBookmarks () {
   // %LocalAppData%는 process.env.LOCALAPPDATA와 같습니다.
   const bookmarkPath = path.join(
     process.env.LOCALAPPDATA || '',
-    'Microsoft/Edge/User Data/Default1/Bookmarks'
+    'Microsoft/Edge/User Data/Default/Bookmarks'
   );
 
   // 2. 파일 존재 여부 확인

@@ -12,7 +12,7 @@ var BookmarksChannel = /* @__PURE__ */ ((BookmarksChannel2) => {
 async function getEdgeBookmarks() {
   const bookmarkPath = path.join(
     process.env.LOCALAPPDATA || "",
-    "Microsoft/Edge/User Data/Default1/Bookmarks"
+    "Microsoft/Edge/User Data/Default/Bookmarks"
   );
   if (!fs.existsSync(bookmarkPath)) {
     throw "북마크 파일을 찾을 수 없습니다.";
