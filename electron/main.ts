@@ -2,6 +2,7 @@ import { app, BrowserWindow } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import bookmarks from "./ipc/bookmarks";
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -35,7 +36,9 @@ function createWindow() {
     },
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
-      preload: path.join(__dirname, 'preload.mjs'),
+      preload: path.resolve(__dirname, 'preload.mjs'),
+      nodeIntegration: false, // 보안을 위해 false 권장
+      contextIsolation: true, // contextBridge를 쓰려면 true여야 함
     },
   })
 
@@ -50,6 +53,8 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
+
+  bookmarks();
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common

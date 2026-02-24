@@ -1,0 +1,41 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Main(Electron)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "windows": { "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd" },
+      "args": [".", "--remote-debugging-port=9222"],
+      "env": {
+        "VITE_DEV_SERVER_URL": "http://localhost:5173"
+      },
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/dist-electron/**/*.js", "${workspaceFolder}/dist-electron/**/*.mjs"],
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/*",
+        "node_modules/*": "${workspaceFolder}/node_modules/*"
+      },
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Renderer(Electron)",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/src",
+      "timeout": 30000
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Debug",
+      "configurations": ["Main(Electron)", "Renderer(Electron)"]
+    }
+  ]
+}
