@@ -1,6 +1,6 @@
-import { ipcMain } from "electron";
-import fs from "fs";
-import path from "path";
+import { ipcMain, app } from "electron";
+import fs from "node:fs/promises";
+import path from "node:path";
 import { BookmarksChannel } from ".";
 
 /**
@@ -14,19 +14,16 @@ async function getEdgeBookmarks () {
     'Microsoft/Edge/User Data/Default/Bookmarks'
   );
 
-  // 2. 파일 존재 여부 확인
-  if (!fs.existsSync(bookmarkPath)) {
-    throw '북마크 파일을 찾을 수 없습니다.';
+  try {
+    // 2. 파일 읽기 (UTF-8 인코딩)
+    const data = await fs.readFile(bookmarkPath, 'utf-8');
+    // 3. JSON 파싱
+    const bookmarks = JSON.parse(data);
+    // 4. 파싱된 데이터 반환
+    return bookmarks;
+  } catch (err) {
+    throw '북마크 파일을 가져올 수 없습니다.';
   }
-
-  // 3. 파일 읽기 (UTF-8 인코딩)
-  const data = fs.readFileSync(bookmarkPath, 'utf-8');
-
-  // 4. JSON 파싱
-  const bookmarks = JSON.parse(data);
-
-  // 5. 파싱된 데이터 반환
-  return bookmarks;
 };
 
 export default function install () {
