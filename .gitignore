@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 dist-electron
+dist-electron/*.js
+dist-electron/*.mjs
 *.local
 
 # Editor directories and files
