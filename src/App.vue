@@ -6,7 +6,7 @@ import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
 import { ref, watch } from 'vue';
 import { Main } from '@views/main';
-import BookmarkProvider from './bookmarks/provider';
+import provider from './bookmarks/provider';
 
 useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -18,7 +18,6 @@ const { ctrl, k } = useMagicKeys();
 const open = ref(false);
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const provider = ref<BookmarkProvider>(new BookmarkProvider());
 
 // Ctrl + K 단축키 감지
 watch([ctrl, k], ([ctrlValue, kValue]) => {
@@ -71,7 +70,7 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
       <div class="w-50"></div>
     </header>
 
-    <Main :provider="provider"></Main>
+    <Main></Main>
 
     <CommandDialog v-model:open="open">
       <CommandInput placeholder="Type a command or search..." />

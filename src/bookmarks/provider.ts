@@ -1,18 +1,14 @@
 import _ from "lodash";
 import dayjs from "dayjs";
+import { Ref, ref } from "vue";
 import { Bookmark, ChromiumBookmark, ChromiumBookmarks } from ".";
 import { BookmarkType, BrowserType } from "./enums";
+
+const TIMESTAMP_FORMAT: string = 'YYYY-MM-DDTHH:mm:ss';
 
 declare interface BrowserSource {
   checksum?: string,
   timestamp?: string
-};
-
-declare interface Provider {
-  edge: BrowserSource,
-  chrome: BrowserSource,
-  automatic: boolean,
-  bookmarks: Bookmark[],
 };
 
 function toBookmark (browser: BrowserType, node: ChromiumBookmark, parent?: Bookmark): Bookmark {
@@ -25,7 +21,7 @@ function toBookmark (browser: BrowserType, node: ChromiumBookmark, parent?: Book
     visit: 0,
     browser: browser
   };
-}
+};
 
 function forFlatingToBookmarks (browser: BrowserType, nodes: ChromiumBookmark[], parent?: Bookmark): Bookmark[] {
   const rtn: Bookmark[] = [];
@@ -35,22 +31,47 @@ function forFlatingToBookmarks (browser: BrowserType, nodes: ChromiumBookmark[],
     const marks = forFlatingToBookmarks(browser, node.children, mark);
     rtn.push(mark, ...marks);
   });
-  return rtn.sort((a, b) => a.type === b.type ? a.name.localeCompare(b.name)
-    : a.type === BookmarkType.FOLDER ? -1 : 1);
-}
+  return rtn.sort(Sorter.compareDefault);
+};
 
-export default class BookmarkProvider implements Provider {
-  edge: BrowserSource = {};
-  chrome: BrowserSource = {};
-  automatic: boolean = false;
-  bookmarks: Bookmark[] = [];
+class Sorter {
+  public static compareDefault (a: Bookmark, b: Bookmark): number {
+    return a.type === b.type ? a.name.localeCompare(b.name)
+      : a.type === BookmarkType.FOLDER ? -1 : 1;
+  }
+};
 
-  async loadEdgeBookmarks () {
+export class BookmarkProvider {
+  private static singleton: BookmarkProvider;
+  private edge: BrowserSource = {};
+  private bookmarks: Bookmark[] = [];
+  public readonly lastUpdateAt: Ref<string> = ref(dayjs().format(TIMESTAMP_FORMAT));
+
+  private constructor () {}
+  public static getInstance () {
+    if (!BookmarkProvider.singleton) {
+      BookmarkProvider.singleton = new BookmarkProvider();
+    }
+    return BookmarkProvider.singleton;
+  }
+
+  public async loadEdgeBookmarks () {
     const data: ChromiumBookmarks = await window.ipcRenderer.fetchEdgeBookmarks();
     if (data.checksum === this.edge.checksum) return;
-    _.set(this.edge, 'checksum', data.checksum);
-    _.set(this.edge, 'timestamp', dayjs().format('YYYY-MM-DDTHH:mm:ss'));
-
     this.bookmarks.push(...forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children));
+    this.lastUpdateAt.value = dayjs().format(TIMESTAMP_FORMAT);
+    _.set(this.edge, 'checksum', data.checksum);
+    _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
   }
-}
+
+  public getBookmark (guid: string): Bookmark | undefined {
+    return this.bookmarks.find(item => item.guid === guid);
+  }
+
+  public getBookmarks (path: string): Bookmark[] {
+    const guid = _.last(path.split('/'));
+    return this.bookmarks.filter(item => (item.parent?.guid ?? '') === guid);
+  }
+};
+
+export default BookmarkProvider.getInstance();

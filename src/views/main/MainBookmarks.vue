@@ -7,38 +7,30 @@ import { FolderIcon, ArrowBigUpIcon, CircleStarIcon, ChevronRightIcon } from "lu
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { Bookmark } from "@/bookmarks";
 import { BookmarkType } from "@/bookmarks/enums";
-
-interface Props {
-  bookmarks: Bookmark[],
-};
+import provider from "@/bookmarks/provider";
 
 function drillPath (node: Bookmark): string {
   if (_.isNil(node.parent)) return `/${node.name}`;
   return drillPath(node.parent) + `/${node.name}`;
 }
 
-const props = defineProps<Props>();
 const route = useRoute();
 const pathCurrent = computed(() => route.path);
 const pathUpper = computed(() => pathCurrent.value.replace(/\/[\w\-]+$/, ''));
 const isRoot = computed(() => pathCurrent.value === '/');
 const pathUpperName = computed(() => {
-  if (isRoot.value) return '';
-  const guid = _.last(pathUpper.value.split('/'));
+  const guid = _.last(pathUpper.value.split('/')) ?? '';
   if (_.isEmpty(guid)) return '';
-  const parent = props.bookmarks.find(node => guid === node.guid)!;
-  return drillPath(parent);
+  const parent = provider.getBookmark(guid);
+  if (_.isNil(guid)) return '';
+  return drillPath(parent!);
 });
 const items = computed(() => {
-  if (isRoot.value) {
-    if (_.isEmpty(props.bookmarks)) return [];
-    return props.bookmarks.filter(bm => _.isEmpty(bm.parent));
-  }
-  const rtn = props.bookmarks.filter(bm => pathCurrent.value.endsWith('/' + _.defaultTo(_.get(bm, 'parent.guid'), '')));
-  return rtn;
+  if (provider.lastUpdateAt.value === '') return [];
+  return provider.getBookmarks(pathCurrent.value);
 });
 
-function getPath (item: Bookmark): string {
+function getRoutePath (item: Bookmark): string {
   if (item.type === BookmarkType.FOLDER) return `#${pathCurrent.value}${isRoot.value ? '' : '/'}${item.guid}`;
   return `microsoft-edge:${item.url ?? ''}`;
 }
@@ -63,7 +55,7 @@ function getPath (item: Bookmark): string {
       </router-link>
     </Item>
     <Item v-for="item in items" variant="outline" size="sm" class="basis-lg max-w-lg" as-child>
-      <a :href="getPath(item)">
+      <a :href="getRoutePath(item)">
         <ItemMedia>
           <FolderIcon v-if="item.type === BookmarkType.FOLDER" class="size-5" />
           <Avatar v-else class="size-5">
