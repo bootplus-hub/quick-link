@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import BookmarkProvider from "@/bookmarks/provider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+
+interface Props {
+  provider: BookmarkProvider,
+};
+
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -12,7 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
         <TabsTrigger value="edu" class="text-xs">교육</TabsTrigger>
       </TabsList>
       <TabsContent value="user" class="text-xs">
-        <router-view />
+        <router-view :bookmarks="provider.bookmarks" />
       </TabsContent>
       <TabsContent value="biz" class="text-xs">
       </TabsContent>

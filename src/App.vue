@@ -2,10 +2,11 @@
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Switch } from "@components/ui/switch";
-import { SunIcon, MoonIcon, FileBracesCornerIcon, MenuIcon } from "lucide-vue-next";
+import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
 import { ref, watch } from 'vue';
 import { Main } from '@views/main';
+import BookmarkProvider from './bookmarks/provider';
 
 useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -17,17 +18,12 @@ const { ctrl, k } = useMagicKeys();
 const open = ref(false);
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
-const edgeBookmarks = ref({});
+const provider = ref<BookmarkProvider>(new BookmarkProvider());
 
 // Ctrl + K 단축키 감지
 watch([ctrl, k], ([ctrlValue, kValue]) => {
   if (ctrlValue && kValue) open.value = true
 });
-
-async function loadEdgeBookmarks () {
-  const data = await window.ipcRenderer.fetchEdgeBookmarks();
-  console.log(data);
-}
 
 </script>
 
@@ -44,7 +40,7 @@ async function loadEdgeBookmarks () {
             <MenubarMenu>
               <MenubarTrigger class="text-xs bg-background/80 font-bold"><MenuIcon class="size-4" /></MenubarTrigger>
               <MenubarContent>
-                <MenubarItem class="text-xs" @select="loadEdgeBookmarks"><FileBracesCornerIcon />Edge 즐겨찾기 가져오기</MenubarItem>
+                <MenubarItem class="text-xs" @select="provider.loadEdgeBookmarks()"><FolderSyncIcon />Edge 즐겨찾기 가져오기</MenubarItem>
                 <MenubarItem class="text-xs">Settings</MenubarItem>
               </MenubarContent>
             </MenubarMenu>
@@ -75,7 +71,7 @@ async function loadEdgeBookmarks () {
       <div class="w-50"></div>
     </header>
 
-    <Main></Main>
+    <Main :provider="provider"></Main>
 
     <CommandDialog v-model:open="open">
       <CommandInput placeholder="Type a command or search..." />
