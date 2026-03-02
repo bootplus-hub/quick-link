@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { BookmarkType, BrowserType } from "./enums.ts";
 
 export interface Bookmark {
@@ -34,4 +35,11 @@ export interface ChromiumBookmarks {
   checksum: string,
   roots: ChromiumBookmarkRoot,
   version?: number
+};
+
+export class RouteUtil {
+  public static toTreePath(bookmark?: Bookmark): string {
+    if (_.isNil(bookmark?.parent)) return `/${bookmark?.guid ?? ''}`;
+    return RouteUtil.toTreePath(bookmark.parent) + `/${bookmark.guid}`;
+  }
 }

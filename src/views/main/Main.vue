@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+import MainBreadcrumb from "./MainBreadcrumb.vue";
 </script>
 
 <template>
@@ -11,7 +12,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
         <TabsTrigger value="helper" class="text-xs">업무 도우미</TabsTrigger>
         <TabsTrigger value="edu" class="text-xs">교육</TabsTrigger>
       </TabsList>
-      <TabsContent value="user" class="text-xs">
+      <TabsContent value="user" class="text-xs flex flex-col gap-4">
+        <MainBreadcrumb />
         <router-view />
       </TabsContent>
       <TabsContent value="biz" class="text-xs">
