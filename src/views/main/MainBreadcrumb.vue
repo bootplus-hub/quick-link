@@ -60,7 +60,7 @@ const items = computed<Item[]>(() => {
 </script>
 
 <template>
-  <div data-slot="main-breadcrumb" class="flex flex-row p-2 gap-2 align-middle">
+  <div data-slot="main-breadcrumb" class="flex flex-row p-2 gap-4 align-middle">
     <MapPinnedIcon class="size-5" />
     <Breadcrumb>
       <BreadcrumbList>
