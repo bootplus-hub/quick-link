@@ -6,6 +6,8 @@ interface Window {
     off: (channel: string, ...args: any[]) => void;
     send: (channel: string, ...args: any[]) => void;
     invoke: (channel: string, ...args: any[]) => Promise<any>;
-    fetchEdgeBookmarks: () => Promise<any>;
+    fetchEdgeBookmarks: () => Promise<ChromiumBookmarksmarks>;
+    fetchBookmarks: () => Promise<ProviderData>;
+    dispatchBookmarks: (data: ProviderData) => Promise<IPCResponse>;
   }
 }

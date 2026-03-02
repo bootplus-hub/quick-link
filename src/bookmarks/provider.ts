@@ -3,8 +3,11 @@ import dayjs from "dayjs";
 import { Ref, ref } from "vue";
 import { Bookmark, ChromiumBookmark, ChromiumBookmarks } from ".";
 import { BookmarkType, BrowserType } from "./enums";
+import { IPCResponse } from "@/ipc";
 
-const TIMESTAMP_FORMAT: string = 'YYYY-MM-DDTHH:mm:ss';
+function timestamp (): string {
+  return dayjs().format('YYYY-MM-DDTHH:mm:ss');
+}
 
 declare interface BrowserSource {
   checksum?: string,
@@ -41,13 +44,21 @@ class Sorter {
   }
 };
 
+export interface ProviderData {
+  edge?: BrowserSource,
+  bookmarks?: Bookmark[],
+  lastUpdateAt?: string,
+};
+
 export class BookmarkProvider {
   private static singleton: BookmarkProvider;
   private edge: BrowserSource = {};
   private bookmarks: Bookmark[] = [];
-  public readonly lastUpdateAt: Ref<string> = ref(dayjs().format(TIMESTAMP_FORMAT));
+  public readonly lastUpdateAt: Ref<string> = ref(timestamp());
 
-  private constructor () {}
+  private constructor () {
+    this.loadAsync();
+  }
   public static getInstance () {
     if (!BookmarkProvider.singleton) {
       BookmarkProvider.singleton = new BookmarkProvider();
@@ -55,11 +66,30 @@ export class BookmarkProvider {
     return BookmarkProvider.singleton;
   }
 
-  public async loadEdgeBookmarks () {
+  public async loadAsync () {
+    const data:ProviderData = await window.ipcRenderer.fetchBookmarks();
+    this.edge.checksum = data.edge?.checksum ?? undefined;
+    this.edge.timestamp = data.edge?.timestamp ?? undefined;
+    this.bookmarks = data.bookmarks ?? [];
+    this.lastUpdateAt.value = data.lastUpdateAt ?? timestamp();
+  }
+
+  public async saveAsync () {
+    const data: ProviderData = {};
+    data.edge = this.edge;
+    data.bookmarks = this.bookmarks;
+    data.lastUpdateAt = this.lastUpdateAt.value;
+    const rst: IPCResponse = await window.ipcRenderer.dispatchBookmarks(data);
+    if (rst.success) return;
+    console.error(rst.error);
+    throw '북마크 저장 실패';
+  }
+
+  public async loadEdgeBookmarksAsync () {
     const data: ChromiumBookmarks = await window.ipcRenderer.fetchEdgeBookmarks();
-    if (data.checksum === this.edge.checksum) return;
+    if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
     this.bookmarks.push(...forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children));
-    this.lastUpdateAt.value = dayjs().format(TIMESTAMP_FORMAT);
+    this.lastUpdateAt.value = timestamp();
     _.set(this.edge, 'checksum', data.checksum);
     _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
   }

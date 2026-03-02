@@ -44,7 +44,11 @@ export default defineConfig(({ mode }) => {
             build: {
               outDir: 'dist-electron',
             }
-          }
+          },
+          onstart(args) {
+            if (env.VITE_USE_ELECTRON === 'true')
+              args.startup();
+          },
         },
         // Ployfill the Electron and Node.js API for Renderer process.
         // If you want use Node.js in Renderer process, the `nodeIntegration` needs to be enabled in the Main process.

@@ -24,6 +24,16 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
   if (ctrlValue && kValue) open.value = true
 });
 
+watch(() => provider.lastUpdateAt.value, () => {
+  provider.saveAsync();
+});
+
+function onLoadEdgeBookmarks () {
+  provider.loadEdgeBookmarksAsync().catch(error => {
+    console.log(error);
+  });
+}
+
 </script>
 
 <template>
@@ -39,7 +49,7 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
             <MenubarMenu>
               <MenubarTrigger class="text-xs bg-background/80 font-bold"><MenuIcon class="size-4" /></MenubarTrigger>
               <MenubarContent>
-                <MenubarItem class="text-xs" @select="provider.loadEdgeBookmarks()"><FolderSyncIcon />Edge 즐겨찾기 가져오기</MenubarItem>
+                <MenubarItem class="text-xs" @select="onLoadEdgeBookmarks()"><FolderSyncIcon />Edge 즐겨찾기 가져오기</MenubarItem>
                 <MenubarItem class="text-xs">Settings</MenubarItem>
               </MenubarContent>
             </MenubarMenu>

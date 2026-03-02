@@ -1,5 +1,8 @@
 import { ipcRenderer, contextBridge } from 'electron'
 import { BookmarksChannel } from "./ipc";
+import { ChromiumBookmarks } from '@/bookmarks';
+import { ProviderData } from '@/bookmarks/provider';
+import { IPCResponse } from '@/ipc';
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -21,8 +24,15 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   },
 
   // You can expose other APTs you need here.
+  // 여기 추가시, src/vite-env.d.ts 에 정의 추가
   // ...
-  fetchEdgeBookmarks() {
-    return ipcRenderer.invoke(BookmarksChannel.EDGE);
-  }
+  fetchEdgeBookmarks(): Promise<ChromiumBookmarks> {
+    return ipcRenderer.invoke(BookmarksChannel.GET_EDGE);
+  },
+  fetchBookmarks(): Promise<ProviderData> {
+    return ipcRenderer.invoke(BookmarksChannel.LOAD_BOOKMARKS);
+  },
+  dispatchBookmarks(data: ProviderData): Promise<IPCResponse> {
+    return ipcRenderer.invoke(BookmarksChannel.SAVE_BOOKMARKS, data);
+  },
 })
