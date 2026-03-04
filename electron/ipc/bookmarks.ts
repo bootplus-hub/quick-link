@@ -33,6 +33,7 @@ const STORE_PATH = path.join(app.getPath('userData'), 'bookmarks.json');
 
 async function loadBookmarks (_event:Electron.IpcMainInvokeEvent): Promise<ProviderData> {
   try {
+    console.log('loadBookmarks', STORE_PATH);
     const json = await fs.readFile(STORE_PATH, 'utf-8');
     const data: ProviderData = JSON.parse(json);
     return data;
@@ -43,6 +44,7 @@ async function loadBookmarks (_event:Electron.IpcMainInvokeEvent): Promise<Provi
 
 async function saveBookmarks (_event:Electron.IpcMainInvokeEvent, data: any): Promise<IPCResponse> {
   try {
+    console.log('saveBookmarks', STORE_PATH);
     const json = JSON.stringify(data);
     await fs.writeFile(STORE_PATH, json, 'utf-8');
     return { success: true };

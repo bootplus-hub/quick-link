@@ -34,7 +34,7 @@ function forFlatingToBookmarks (browser: BrowserType, nodes: ChromiumBookmark[],
     const marks = forFlatingToBookmarks(browser, node.children, mark);
     rtn.push(mark, ...marks);
   });
-  return rtn.sort(Sorter.compareDefault);
+  return rtn;
 };
 
 class Sorter {
@@ -88,10 +88,13 @@ export class BookmarkProvider {
   public async loadEdgeBookmarksAsync () {
     const data: ChromiumBookmarks = await window.ipcRenderer.fetchEdgeBookmarks();
     if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
-    this.bookmarks.push(...forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children));
+    const items = forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children)
+        .filter(this.checkNewBookmark, this);
+    this.bookmarks.push(...items);
     this.lastUpdateAt.value = timestamp();
     _.set(this.edge, 'checksum', data.checksum);
     _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
+    if (items.length === 0) throw '추가할 내용이 없습니다.';
   }
 
   public getBookmark (guid: string): Bookmark | undefined {
@@ -100,7 +103,12 @@ export class BookmarkProvider {
 
   public getBookmarks (path: string): Bookmark[] {
     const guid = _.last(path.split('/'));
-    return this.bookmarks.filter(item => (item.parent?.guid ?? '') === guid);
+    return this.bookmarks.filter(item => (item.parent?.guid ?? '') === guid)
+      .sort(Sorter.compareDefault);
+  }
+
+  private checkNewBookmark (item: Bookmark): boolean {
+    return !this.bookmarks.some(bookmark => bookmark.guid === item.guid || bookmark.url === item.url);
   }
 };
 

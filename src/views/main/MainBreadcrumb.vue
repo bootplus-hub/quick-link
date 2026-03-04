@@ -28,7 +28,7 @@ declare interface Item {
   sibling?: Item[],
 };
 
-function getItem (guid: string, ellipsis: boolean = false): Item {
+function getItem (guid: string): Item {
   const current = provider.getBookmark(guid);
   if (_.isNil(current)) return {};
 
@@ -43,19 +43,23 @@ function getItem (guid: string, ellipsis: boolean = false): Item {
       });
 
   return {
-    name: ellipsis ? undefined : current.name,
+    name: current.name,
     path: path,
     sibling: sibling,
   };
 }
 
-const ITEM_MAX_LEN = 10;
+const ITEM_MAX_LEN = 5;
 const route = useRoute();
 const items = computed<Item[]>(() => {
   const guids = route.path === '/' ? []
     : RouteUtil.toTreePath(provider.getBookmark(route.path.substring(1))).split('/').slice(1);
-  if (guids.length <= ITEM_MAX_LEN) return guids.map(guid => getItem(guid));
-  return guids.slice(-ITEM_MAX_LEN).map((guid, index) => getItem(guid, index === 0));
+  const ellipsis = guids.length > ITEM_MAX_LEN;
+  const rtn = ellipsis
+    ? guids.slice(-ITEM_MAX_LEN).map(guid => getItem(guid))
+    : guids.map(guid => getItem(guid));
+  if (ellipsis) return [{}, ...rtn];
+  return rtn;
 });
 </script>
 
@@ -73,11 +77,10 @@ const items = computed<Item[]>(() => {
         <template v-for="item in items">
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <DropdownMenu v-if="!_.isEmpty(item.sibling)">
-              <DropdownMenuTrigger v-if="_.isNil(item.name)" class="flex items-center gap-1">
-                <BreadcrumbEllipsis class="h-4 w-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuTrigger v-else class="flex items-center gap-1 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-3.5">
+            <BreadcrumbEllipsis v-if="_.isEmpty(item)" class="h-4 w-4" />
+            <BreadcrumbPage v-else-if="_.isEmpty(item.sibling)">{{ item.name }}</BreadcrumbPage>
+            <DropdownMenu v-else>
+              <DropdownMenuTrigger class="flex items-center gap-1 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-3.5">
                 {{ item.name }}
                 <ChevronDownIcon />
               </DropdownMenuTrigger>
@@ -87,7 +90,6 @@ const items = computed<Item[]>(() => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <BreadcrumbPage v-else>{{ item.name }}</BreadcrumbPage>
           </BreadcrumbItem>
         </template>
       </BreadcrumbList>
