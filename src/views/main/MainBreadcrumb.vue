@@ -1,26 +1,13 @@
 <script setup lang="ts">
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbEllipsis,
-  BreadcrumbSeparator,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-} from "@components/ui/breadcrumb";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { Breadcrumb, BreadcrumbList, BreadcrumbEllipsis, BreadcrumbSeparator, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage } from "@components/ui/breadcrumb";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon, MapIcon, MapPinCheckIcon, MapPinnedIcon } from "lucide-vue-next";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { BookmarkType } from "@/bookmarks/enums";
 import { RouteUtil } from "@/bookmarks";
-import _ from "lodash";
 import provider from "@/bookmarks/provider";
-import { ChevronDownIcon, MapPinnedIcon } from "lucide-vue-next";
+import _ from "lodash";
 
 declare interface Item {
   name?: string,
@@ -32,7 +19,6 @@ function getItem (guid: string): Item {
   const current = provider.getBookmark(guid);
   if (_.isNil(current)) return {};
 
-  const path = RouteUtil.toTreePath(current);
   const sibling = provider.getBookmarks(current?.parent?.guid ?? '/')
       .filter(bm => bm.type === BookmarkType.FOLDER)
       .map(bm => {
@@ -44,7 +30,7 @@ function getItem (guid: string): Item {
 
   return {
     name: current.name,
-    path: path,
+    path: `/${current.guid}`,
     sibling: sibling,
   };
 }
@@ -86,7 +72,11 @@ const items = computed<Item[]>(() => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem v-for="sb in item.sibling" as-child>
-                  <router-link :to="sb.path ?? '/'">{{ sb.name }}</router-link>
+                  <router-link :to="sb.path ?? '/'">
+                    <MapPinCheckIcon v-if="sb.path === item.path" class="size-4" />
+                    <MapIcon v-else class="size-4" />
+                    {{ sb.name }}
+                  </router-link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
