@@ -2,7 +2,7 @@ import { ipcMain, app } from "electron";
 import fs from "node:fs/promises";
 import path from "node:path";
 import _ from "lodash";
-import { BookmarksChannel } from ".";
+import { BookmarksChannel } from "../ipc";
 import type { IPCResponse } from "@/ipc";
 import type { ProviderData } from "@/bookmarks/provider";
 

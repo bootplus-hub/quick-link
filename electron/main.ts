@@ -2,12 +2,11 @@ import { app, BrowserWindow } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import bookmarks from "./ipc/bookmarks";
+import bookmarks from "./bookmarks";
+import favicons from "./favicon";
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
-import favicons from "./favicon";
 
 // The built directory structure
 //
