@@ -7,6 +7,8 @@ import bookmarks from "./ipc/bookmarks";
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+import favicons from "./favicon";
+
 // The built directory structure
 //
 // ├─┬─┬ dist
@@ -55,6 +57,7 @@ function createWindow() {
   }
 
   bookmarks();
+  favicons();
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common

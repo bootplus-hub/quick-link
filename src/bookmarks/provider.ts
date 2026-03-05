@@ -86,6 +86,7 @@ export class BookmarkProvider {
   }
 
   public async loadEdgeBookmarksAsync () {
+    window.ipcRenderer.syncEdgeFavicons();
     const data: ChromiumBookmarks = await window.ipcRenderer.fetchEdgeBookmarks();
     if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
     const items = forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children)

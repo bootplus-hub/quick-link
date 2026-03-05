@@ -4,3 +4,7 @@ export const enum BookmarksChannel {
   LOAD_BOOKMARKS = 'load-bookmarks',
   SAVE_BOOKMARKS = 'save-bookmarks',
 };
+
+export const enum FaviconChannel {
+  SYNC_EDGE = "sync-edge-favicon",
+};

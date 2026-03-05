@@ -9,13 +9,6 @@ export default defineConfig(({ mode }) => {
   // 현재 모드(development/production)에 맞는 .env 파일을 로드
   const env = loadEnv(mode, process.cwd());
   return {
-    // build: env.VITE_USE_ELECTRON === 'false' ? {
-    //   ssr: true,
-    //   rollupOptions: {
-    //     input: 'electron/main.ts',
-    //   },
-    //   outDir: 'dist-electron',
-    // } : undefined,
     plugins: [
       vue(),
       tailwindcss(),
@@ -29,6 +22,9 @@ export default defineConfig(({ mode }) => {
             build: {
               sourcemap: env.VITE_USE_SOURCE_MAP === 'true',
               outDir: 'dist-electron',
+              rollupOptions: {
+                external: ['better-sqlite3']
+              },
             },
           },
           onstart(options) {

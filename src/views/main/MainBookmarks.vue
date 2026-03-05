@@ -30,7 +30,7 @@ function getRoutePath (item: Bookmark): string {
         <ItemMedia>
           <FolderIcon v-if="item.type === BookmarkType.FOLDER" class="size-5" />
           <Avatar v-else class="size-5">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage :src="`favicon://${item.url}`" />
             <AvatarFallback>
               <CircleStarIcon />
             </AvatarFallback>

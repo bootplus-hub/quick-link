@@ -9,5 +9,6 @@ interface Window {
     fetchEdgeBookmarks: () => Promise<ChromiumBookmarksmarks>;
     fetchBookmarks: () => Promise<ProviderData>;
     dispatchBookmarks: (data: ProviderData) => Promise<IPCResponse>;
+    syncEdgeFavicons: () => Promise<IPCResponse>;
   }
 }

@@ -1,5 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron'
-import { BookmarksChannel } from "./ipc";
+import { BookmarksChannel, FaviconChannel } from "./ipc";
 import { ChromiumBookmarks } from '@/bookmarks';
 import { ProviderData } from '@/bookmarks/provider';
 import { IPCResponse } from '@/ipc';
@@ -34,5 +34,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   },
   dispatchBookmarks(data: ProviderData): Promise<IPCResponse> {
     return ipcRenderer.invoke(BookmarksChannel.SAVE_BOOKMARKS, data);
+  },
+  syncEdgeFavicons(): Promise<IPCResponse> {
+    return ipcRenderer.invoke(FaviconChannel.SYNC_EDGE);
   },
 })
