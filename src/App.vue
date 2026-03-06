@@ -96,7 +96,7 @@ function onLoadEdgeBookmarks () {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Bookmarks">
-          <CommandItem v-for="item in commands" :value="item.url ?? ''" class="cursor-pointer gap-2" as-child>
+          <CommandItem v-for="item in commands" :value="item.url ?? ''" class="cursor-pointer" as-child>
             <Item size="sm" as-child>
               <a :href="item.getPath()">
                 <ItemMedia>
