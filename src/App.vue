@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
+import { Item, ItemContent, ItemTitle, ItemMedia, ItemActions } from "@components/ui/item";
+import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
+import { CircleStarIcon, ExternalLinkIcon } from "lucide-vue-next";
 import { Switch } from "@components/ui/switch";
 import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Main } from '@views/main';
 import provider from './bookmarks/provider';
+import { Bookmark } from './bookmarks';
 
 useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -18,6 +22,11 @@ const { ctrl, k } = useMagicKeys();
 const open = ref(false);
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+
+const commands = computed<Bookmark[]>(() => {
+  console.log('commands update', provider.lastUpdateAt);
+  return provider.getCommands();
+});
 
 // Ctrl + K 단축키 감지
 watch([ctrl, k], ([ctrlValue, kValue]) => {
@@ -60,9 +69,9 @@ function onLoadEdgeBookmarks () {
           class="flex h-7 w-64 items-center justify-between rounded-md border bg-muted px-3 text-xs text-muted-foreground cursor-pointer hover:bg-accent"
           style="-webkit-app-region: no-drag"
           @click="open = true">
-          <span>Search commands...</span>
+          <span>Search ...</span>
           <kbd class="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-background px-1.5 font-mono text-[10px] font-medium opacity-100">
-            <span class="text-xs">⌘</span>K
+            Ctrl + K
           </kbd>
         </div>
 
@@ -83,12 +92,32 @@ function onLoadEdgeBookmarks () {
     <Main></Main>
 
     <CommandDialog v-model:open="open">
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder="Search ..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions">
-          <CommandItem value="settings">Settings</CommandItem>
-          <CommandItem value="theme">Change Theme</CommandItem>
+        <CommandGroup heading="Bookmarks">
+          <CommandItem v-for="item in commands" :value="item.url ?? ''" class="cursor-pointer gap-2" as-child>
+            <Item size="sm" as-child>
+              <a :href="item.getPath()">
+                <ItemMedia>
+                  <Avatar class="size-5">
+                    <AvatarImage :src="`favicon://${item.url}`" />
+                    <AvatarFallback>
+                      <CircleStarIcon />
+                    </AvatarFallback>
+                  </Avatar>
+                </ItemMedia>
+                <ItemContent class="min-w-0">
+                  <ItemTitle class="text-xs min-w-0 w-full">
+                    <span class="truncate">{{ item.name }}</span>
+                  </ItemTitle>
+                </ItemContent>
+                <ItemActions>
+                  <ExternalLinkIcon class="size-4" />
+                </ItemActions>
+              </a>
+            </Item>
+          </CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>

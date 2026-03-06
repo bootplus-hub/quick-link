@@ -5,7 +5,6 @@ import { ChevronDownIcon, MapIcon, MapPinCheckIcon, MapPinnedIcon } from "lucide
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { BookmarkType } from "@/bookmarks/enums";
-import { RouteUtil } from "@/bookmarks";
 import provider from "@/bookmarks/provider";
 import _ from "lodash";
 
@@ -19,7 +18,7 @@ function getItem (guid: string): Item {
   const current = provider.getBookmark(guid);
   if (_.isNil(current)) return {};
 
-  const sibling = provider.getBookmarks(current?.parent?.guid ?? '/')
+  const sibling = provider.getBookmarks(current?.parent ?? '/')
       .filter(bm => bm.type === BookmarkType.FOLDER)
       .map(bm => {
         return {
@@ -39,7 +38,7 @@ const ITEM_MAX_LEN = 5;
 const route = useRoute();
 const items = computed<Item[]>(() => {
   const guids = route.path === '/' ? []
-    : RouteUtil.toTreePath(provider.getBookmark(route.path.substring(1))).split('/').slice(1);
+    : provider.getRouterTreePath(provider.getBookmark(route.path.substring(1))).split('/').slice(1);
   const ellipsis = guids.length > ITEM_MAX_LEN;
   const rtn = ellipsis
     ? guids.slice(-ITEM_MAX_LEN).map(guid => getItem(guid))

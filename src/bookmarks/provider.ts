@@ -14,23 +14,67 @@ declare interface BrowserSource {
   timestamp?: string
 };
 
-function toBookmark (browser: BrowserType, node: ChromiumBookmark, parent?: Bookmark): Bookmark {
-  return {
-    parent: parent,
-    guid: node.guid,
-    name: node.name,
-    type: node.type === BookmarkType.URL ? BookmarkType.URL : BookmarkType.FOLDER,
-    url: node.url,
-    visit: 0,
-    browser: browser
-  };
+class BookmarkImpl implements Bookmark {
+  constructor (
+    public guid: string,
+    public type: BookmarkType,
+    public name: string,
+    public visit: number,
+    public browser: BrowserType,
+    public url?: string,
+    public parent?: string
+  ) {
+    this.guid = guid;
+    this.type = type === BookmarkType.URL ? BookmarkType.URL : BookmarkType.FOLDER,
+    this.name = name;
+    this.visit = visit;
+    this.browser = browser;
+    this.url = url;
+    this.parent = parent;
+  }
+
+  getPath (): string {
+    if (this.type === BookmarkType.FOLDER) return `#/${this.guid}`;
+    return this.browser === BrowserType.EDGE
+      ? `microsoft-edge:${this.url ?? ''}`
+      : `microsoft-edge:${this.url ?? ''}`;
+  }
+
+  getIconUrl(): string {
+    if (!this.url) return '';
+    return `favicon://${this.url}`;
+  }
+
+  static ofBrowser (browser: BrowserType, node: ChromiumBookmark, parent?: Bookmark): BookmarkImpl {
+    return new BookmarkImpl(
+      node.guid,
+      node.type === BookmarkType.URL ? BookmarkType.URL : BookmarkType.FOLDER,
+      node.name,
+      0,
+      browser,
+      node.url,
+      parent?.guid
+    );
+  }
+
+  static ofBookmark (src: Bookmark): BookmarkImpl {
+    return new BookmarkImpl(
+      src.guid,
+      src.type,
+      src.name,
+      src.visit,
+      src.browser,
+      src.url,
+      src.parent
+    );
+  }
 };
 
 function forFlatingToBookmarks (browser: BrowserType, nodes: ChromiumBookmark[], parent?: Bookmark): Bookmark[] {
   const rtn: Bookmark[] = [];
   if (!Array.isArray(nodes) || nodes.length == 0) return rtn;
   nodes.forEach(node => {
-    const mark = toBookmark(browser, node, parent);
+    const mark = BookmarkImpl.ofBrowser(browser, node, parent);
     const marks = forFlatingToBookmarks(browser, node.children, mark);
     rtn.push(mark, ...marks);
   });
@@ -39,8 +83,11 @@ function forFlatingToBookmarks (browser: BrowserType, nodes: ChromiumBookmark[],
 
 class Sorter {
   public static compareDefault (a: Bookmark, b: Bookmark): number {
-    return a.type === b.type ? a.name.localeCompare(b.name)
-      : a.type === BookmarkType.FOLDER ? -1 : 1;
+    if (a.type === b.type) {
+      if (a.visit !== b.visit) return a.visit - b.visit;
+      else a.name.localeCompare(b.name);
+    }
+    return a.type === BookmarkType.FOLDER ? -1 : 1;
   }
 };
 
@@ -70,7 +117,7 @@ export class BookmarkProvider {
     const data:ProviderData = await window.ipcRenderer.fetchBookmarks();
     this.edge.checksum = data.edge?.checksum ?? undefined;
     this.edge.timestamp = data.edge?.timestamp ?? undefined;
-    this.bookmarks = data.bookmarks ?? [];
+    this.bookmarks = data.bookmarks?.map(BookmarkImpl.ofBookmark) ?? [];
     this.lastUpdateAt.value = data.lastUpdateAt ?? timestamp();
   }
 
@@ -104,8 +151,19 @@ export class BookmarkProvider {
 
   public getBookmarks (path: string): Bookmark[] {
     const guid = _.last(path.split('/'));
-    return this.bookmarks.filter(item => (item.parent?.guid ?? '') === guid)
+    return this.bookmarks.filter(item => (item.parent ?? '') === guid)
       .sort(Sorter.compareDefault);
+  }
+
+  public getCommands (): Bookmark[] {
+    return this.bookmarks
+      .filter(item => item.type === BookmarkType.URL)
+      .sort(Sorter.compareDefault);
+  }
+
+  public getRouterTreePath (bookmark?: Bookmark): string {
+    if (_.isNil(bookmark?.parent)) return `/${bookmark?.guid ?? ''}`;
+    return this.getRouterTreePath(this.getBookmark(bookmark.parent)) + `/${bookmark.guid}`;
   }
 
   private checkNewBookmark (item: Bookmark): boolean {

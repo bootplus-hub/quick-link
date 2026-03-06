@@ -3,12 +3,14 @@ import { BookmarkType, BrowserType } from "./enums.ts";
 
 export interface Bookmark {
   url?: string,
-  parent?: Bookmark,
+  parent?: string,
   guid: string,
   type: BookmarkType,
   name: string,
   visit: number,
-  browser: BrowserType
+  browser: BrowserType,
+  getPath(): string,
+  getIconUrl(): string,
 };
 
 export interface ChromiumBookmark {
@@ -36,10 +38,3 @@ export interface ChromiumBookmarks {
   roots: ChromiumBookmarkRoot,
   version?: number
 };
-
-export class RouteUtil {
-  public static toTreePath(bookmark?: Bookmark): string {
-    if (_.isNil(bookmark?.parent)) return `/${bookmark?.guid ?? ''}`;
-    return RouteUtil.toTreePath(bookmark.parent) + `/${bookmark.guid}`;
-  }
-}
