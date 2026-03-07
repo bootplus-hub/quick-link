@@ -4,6 +4,7 @@ import { Ref, ref } from "vue";
 import { Bookmark, ChromiumBookmark, ChromiumBookmarks } from ".";
 import { BookmarkType, BrowserType } from "./enums";
 import { IPCResponse } from "@/ipc";
+import mitt from "mitt";
 
 function timestamp (): string {
   return dayjs().format('YYYY-MM-DDTHH:mm:ss');
@@ -40,9 +41,13 @@ class BookmarkImpl implements Bookmark {
       : `microsoft-edge:${this.url ?? ''}`;
   }
 
-  getIconUrl(): string {
+  getIconUrl (): string {
     if (!this.url) return '';
     return `favicon://${this.url}`;
+  }
+
+  getParentPath (): string {
+    return `/${this.parent ?? ''}`;
   }
 
   static ofBrowser (browser: BrowserType, node: ChromiumBookmark, parent?: Bookmark): BookmarkImpl {
@@ -84,7 +89,7 @@ function forFlatingToBookmarks (browser: BrowserType, nodes: ChromiumBookmark[],
 class Sorter {
   public static compareDefault (a: Bookmark, b: Bookmark): number {
     if (a.type === b.type) {
-      if (a.visit !== b.visit) return a.visit - b.visit;
+      if (a.visit !== b.visit) return b.visit - a.visit;
       else a.name.localeCompare(b.name);
     }
     return a.type === BookmarkType.FOLDER ? -1 : 1;
@@ -97,10 +102,15 @@ export interface ProviderData {
   lastUpdateAt?: string,
 };
 
+export type ProviderEvents = {
+  'update': string | undefined;
+};
+
 export class BookmarkProvider {
   private static singleton: BookmarkProvider;
   private edge: BrowserSource = {};
   private bookmarks: Bookmark[] = [];
+  public readonly bus = mitt<ProviderEvents>();
   public readonly lastUpdateAt: Ref<string> = ref(timestamp());
 
   private constructor () {
@@ -119,6 +129,7 @@ export class BookmarkProvider {
     this.edge.timestamp = data.edge?.timestamp ?? undefined;
     this.bookmarks = data.bookmarks?.map(BookmarkImpl.ofBookmark) ?? [];
     this.lastUpdateAt.value = data.lastUpdateAt ?? timestamp();
+    this.bus.emit('update');
   }
 
   public async saveAsync () {
@@ -140,6 +151,7 @@ export class BookmarkProvider {
         .filter(this.checkNewBookmark, this);
     this.bookmarks.push(...items);
     this.lastUpdateAt.value = timestamp();
+    this.bus.emit('update');
     _.set(this.edge, 'checksum', data.checksum);
     _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
     if (items.length === 0) throw '추가할 내용이 없습니다.';

@@ -9,8 +9,9 @@ export interface Bookmark {
   name: string,
   visit: number,
   browser: BrowserType,
-  getPath(): string,
-  getIconUrl(): string,
+  getPath (): string,
+  getIconUrl (): string,
+  getParentPath (): string,
 };
 
 export interface ChromiumBookmark {

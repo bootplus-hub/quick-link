@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
-import { Item, ItemContent, ItemTitle, ItemMedia, ItemActions } from "@components/ui/item";
-import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
-import { CircleStarIcon, ExternalLinkIcon } from "lucide-vue-next";
 import { Switch } from "@components/ui/switch";
 import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
-import { computed, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Main } from '@views/main';
 import provider from './bookmarks/provider';
 import { Bookmark } from './bookmarks';
 import { AcceptableValue, type ListboxItemSelectEvent } from "reka-ui";
 import { useRouter } from 'vue-router';
+import { BookmarkItem } from './bookmarks/ui';
 
 useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -26,10 +24,14 @@ const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const router = useRouter();
 
-const commands = computed<Bookmark[]>(() => {
-  console.log('commands update', provider.lastUpdateAt);
-  return provider.getCommands();
-});
+const commands = ref<Bookmark[]>(provider.getCommands());
+
+function refresh (_path?: string) {
+  commands.value = provider.getCommands();
+}
+
+onMounted(() => provider.bus.on('update', refresh));
+onUnmounted(() => provider.bus.off('update', refresh));
 
 // Ctrl + K 단축키 감지
 watch([ctrl, k], ([ctrlValue, kValue]) => {
@@ -48,7 +50,7 @@ function onLoadEdgeBookmarks () {
 
 function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
   const item = event.detail.value as Bookmark;
-  router.push(item.parent ?? '/');
+  router.push(item.getParentPath());
   open.value = false;
 }
 
@@ -106,26 +108,7 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Bookmarks">
           <CommandItem v-for="item in commands" :value="item" class="cursor-pointer" as-child @select="onSelectCommand">
-            <Item size="sm" as-child>
-              <a :href="item.getPath()">
-                <ItemMedia>
-                  <Avatar class="size-5">
-                    <AvatarImage :src="`favicon://${item.url}`" />
-                    <AvatarFallback>
-                      <CircleStarIcon />
-                    </AvatarFallback>
-                  </Avatar>
-                </ItemMedia>
-                <ItemContent class="min-w-0">
-                  <ItemTitle class="text-xs min-w-0 w-full">
-                    <span class="truncate">{{ item.name }}</span>
-                  </ItemTitle>
-                </ItemContent>
-                <ItemActions>
-                  <ExternalLinkIcon class="size-4" />
-                </ItemActions>
-              </a>
-            </Item>
+            <BookmarkItem item-type="command" :item="item" />
           </CommandItem>
         </CommandGroup>
       </CommandList>
