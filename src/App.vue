@@ -11,6 +11,8 @@ import { computed, ref, watch } from 'vue';
 import { Main } from '@views/main';
 import provider from './bookmarks/provider';
 import { Bookmark } from './bookmarks';
+import { AcceptableValue, type ListboxItemSelectEvent } from "reka-ui";
+import { useRouter } from 'vue-router';
 
 useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -22,6 +24,7 @@ const { ctrl, k } = useMagicKeys();
 const open = ref(false);
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+const router = useRouter();
 
 const commands = computed<Bookmark[]>(() => {
   console.log('commands update', provider.lastUpdateAt);
@@ -41,6 +44,12 @@ function onLoadEdgeBookmarks () {
   provider.loadEdgeBookmarksAsync().catch(error => {
     console.log(error);
   });
+}
+
+function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
+  const item = event.detail.value as Bookmark;
+  router.push(item.parent ?? '/');
+  open.value = false;
 }
 
 </script>
@@ -96,7 +105,7 @@ function onLoadEdgeBookmarks () {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Bookmarks">
-          <CommandItem v-for="item in commands" :value="item.url ?? ''" class="cursor-pointer" as-child>
+          <CommandItem v-for="item in commands" :value="item" class="cursor-pointer" as-child @select="onSelectCommand">
             <Item size="sm" as-child>
               <a :href="item.getPath()">
                 <ItemMedia>
