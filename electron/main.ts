@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import bookmarks from "./bookmarks";
 import favicons from "./favicon";
+import launcher from "./launcher";
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -57,6 +58,7 @@ function createWindow() {
 
   bookmarks();
   favicons();
+  launcher();
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common

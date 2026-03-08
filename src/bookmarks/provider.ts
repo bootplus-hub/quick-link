@@ -38,7 +38,7 @@ class BookmarkImpl implements Bookmark {
     if (this.type === BookmarkType.FOLDER) return `#/${this.guid}`;
     return this.browser === BrowserType.EDGE
       ? `microsoft-edge:${this.url ?? ''}`
-      : `microsoft-edge:${this.url ?? ''}`;
+      : `google-chrome:${this.url ?? ''}`;
   }
 
   getIconUrl (): string {
