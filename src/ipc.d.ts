@@ -1,4 +1,5 @@
 declare export interface IPCResponse {
   success: boolean,
-  error?: unknown
+  error?: unknown,
+  data?: any,
 };

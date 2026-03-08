@@ -98,6 +98,7 @@ class Sorter {
 
 export interface ProviderData {
   edge?: BrowserSource,
+  chrome?: BrowserSource,
   bookmarks?: Bookmark[],
   lastUpdateAt?: string,
 };
@@ -109,6 +110,7 @@ export type ProviderEvents = {
 export class BookmarkProvider {
   private static singleton: BookmarkProvider;
   private edge: BrowserSource = {};
+  private chrome: BrowserSource = {};
   private bookmarks: Bookmark[] = [];
   public readonly bus = mitt<ProviderEvents>();
   public readonly lastUpdateAt: Ref<string> = ref(timestamp());
@@ -127,6 +129,8 @@ export class BookmarkProvider {
     const data:ProviderData = await window.ipcRenderer.fetchBookmarks();
     this.edge.checksum = data.edge?.checksum ?? undefined;
     this.edge.timestamp = data.edge?.timestamp ?? undefined;
+    this.chrome.checksum = data.chrome?.checksum ?? undefined;
+    this.chrome.timestamp = data.chrome?.timestamp ?? undefined;
     this.bookmarks = data.bookmarks?.map(BookmarkImpl.ofBookmark) ?? [];
     this.lastUpdateAt.value = data.lastUpdateAt ?? timestamp();
     this.bus.emit('update');
@@ -135,6 +139,7 @@ export class BookmarkProvider {
   public async saveAsync () {
     const data: ProviderData = {};
     data.edge = this.edge;
+    data.chrome = this.chrome;
     data.bookmarks = this.bookmarks;
     data.lastUpdateAt = this.lastUpdateAt.value;
     const rst: IPCResponse = await window.ipcRenderer.dispatchBookmarks(data);
@@ -145,7 +150,9 @@ export class BookmarkProvider {
 
   public async loadEdgeBookmarksAsync () {
     window.ipcRenderer.syncEdgeFavicons();
-    const data: ChromiumBookmarks = await window.ipcRenderer.fetchEdgeBookmarks();
+    const res = await window.ipcRenderer.fetchEdgeBookmarks() as IPCResponse;
+    if (!res.success) throw res.error;
+    const data = res.data as ChromiumBookmarks;
     if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
     const items = forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
@@ -154,6 +161,22 @@ export class BookmarkProvider {
     this.bus.emit('update');
     _.set(this.edge, 'checksum', data.checksum);
     _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
+    if (items.length === 0) throw '추가할 내용이 없습니다.';
+  }
+
+  public async loadChromeBookmarksAsync () {
+    window.ipcRenderer.syncChromeFavicons();
+    const res = await window.ipcRenderer.fetchChromeBookmarks() as IPCResponse;
+    if (!res.success) throw res.error;
+    const data = res.data as ChromiumBookmarks;
+    if (data.checksum === this.chrome.checksum) throw '새로운 내용이 없습니다.';
+    const items = forFlatingToBookmarks(BrowserType.CHROME, data.roots.bookmark_bar.children)
+        .filter(this.checkNewBookmark, this);
+    this.bookmarks.push(...items);
+    this.lastUpdateAt.value = timestamp();
+    this.bus.emit('update');
+    _.set(this.chrome, 'checksum', data.checksum);
+    _.set(this.chrome, 'timestamp', this.lastUpdateAt.value);
     if (items.length === 0) throw '추가할 내용이 없습니다.';
   }
 

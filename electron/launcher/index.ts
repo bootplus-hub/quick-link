@@ -1,17 +1,15 @@
 import { exec } from "child_process";
 import { promisify } from "util";
 import { protocol } from "electron";
-import { ChromeBrowser } from "electron/browser";
+import { ChromeBrowser } from "../browser";
 
 const execAsync = promisify(exec);
 
-const chrome = ChromeBrowser.getInstance();
-
 async function runGoogleChromeAync (request: Request): Promise<Response> {
   try {
-    if (!chrome.exists) throw 'chrome browser not exists';
+    if (!ChromeBrowser.getInstance().exists) throw 'chrome browser not exists';
     const url = request.url.replace(/^google-chrome:(\w+):?\/+(.*)/i, '$1://$2');
-    await execAsync(`"${chrome.path}" "${url}"`);
+    await execAsync(`"${ChromeBrowser.getInstance().path}" "${url}"`);
     return new Response(null, { status: 204 });
   } catch (err) {
     console.error('runGoogleChromeAync', err);

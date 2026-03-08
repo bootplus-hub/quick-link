@@ -7,4 +7,5 @@ export const enum BookmarksChannel {
 
 export const enum FaviconChannel {
   SYNC_EDGE = "sync-edge-favicon",
+  SYNC_CHROME = "sync-chrome-favicon",
 };

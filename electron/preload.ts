@@ -1,6 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron'
 import { BookmarksChannel, FaviconChannel } from "./ipc";
-import { ChromiumBookmarks } from '@/bookmarks';
 import { ProviderData } from '@/bookmarks/provider';
 import { IPCResponse } from '@/ipc';
 
@@ -26,8 +25,11 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // You can expose other APTs you need here.
   // 여기 추가시, src/vite-env.d.ts 에 정의 추가
   // ...
-  fetchEdgeBookmarks(): Promise<ChromiumBookmarks> {
+  fetchEdgeBookmarks(): Promise<IPCResponse> {
     return ipcRenderer.invoke(BookmarksChannel.GET_EDGE);
+  },
+  fetchChromeBookmarks(): Promise<IPCResponse> {
+    return ipcRenderer.invoke(BookmarksChannel.GET_CHROME);
   },
   fetchBookmarks(): Promise<ProviderData> {
     return ipcRenderer.invoke(BookmarksChannel.LOAD_BOOKMARKS);
@@ -37,5 +39,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   },
   syncEdgeFavicons(): Promise<IPCResponse> {
     return ipcRenderer.invoke(FaviconChannel.SYNC_EDGE);
+  },
+  syncChromeFavicons(): Promise<IPCResponse> {
+    return ipcRenderer.invoke(FaviconChannel.SYNC_CHROME);
   },
 })
