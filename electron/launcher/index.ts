@@ -7,9 +7,9 @@ const execAsync = promisify(exec);
 
 async function runGoogleChromeAync (request: Request): Promise<Response> {
   try {
-    if (!ChromeBrowser.getInstance().exists) throw 'chrome browser not exists';
+    if (!ChromeBrowser.getInstance().isExists()) throw 'chrome browser not exists';
     const url = request.url.replace(/^google-chrome:(\w+):?\/+(.*)/i, '$1://$2');
-    await execAsync(`"${ChromeBrowser.getInstance().path}" "${url}"`);
+    await execAsync(`"${ChromeBrowser.getInstance().getPath()}" "${url}"`);
     return new Response(null, { status: 204 });
   } catch (err) {
     console.error('runGoogleChromeAync', err);

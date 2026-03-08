@@ -12,14 +12,22 @@ export class ChromeBrowser {
     return this.instance;
   }
 
-  exists: boolean = false;
-  path?: string;
+  private exists: boolean = false;
+  private path?: string;
 
   private constructor () {
-    this.findPath();
+    this.find();
   }
 
-  private async findPath (): Promise<void> {
+  isExists (): boolean {
+    return this.exists;
+  }
+
+  getPath (): string|undefined {
+    return this.path;
+  }
+
+  async find (): Promise<void> {
     // 1. 읽고자 하는 레지스트리 경로
     const regPath = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe';
     // 2. 명령어 실행 (기본값인 /ve를 조회)
