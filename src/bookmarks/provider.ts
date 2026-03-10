@@ -34,9 +34,9 @@ class BookmarkImpl implements Bookmark {
     this.parent = parent;
   }
 
-  getPath (): string {
+  getPath (target?: BrowserType): string {
     if (this.type === BookmarkType.FOLDER) return `#/${this.guid}`;
-    return this.browser === BrowserType.EDGE
+    return this.browser === (target ?? BrowserType.EDGE)
       ? `microsoft-edge:${this.url ?? ''}`
       : `google-chrome:${this.url ?? ''}`;
   }

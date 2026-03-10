@@ -9,7 +9,7 @@ export interface Bookmark {
   name: string,
   visit: number,
   browser: BrowserType,
-  getPath (): string,
+  getPath (target?: BrowserType): string,
   getIconUrl (): string,
   getParentPath (): string,
 };
