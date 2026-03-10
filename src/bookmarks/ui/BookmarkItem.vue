@@ -83,14 +83,16 @@ function moveDown(guid: string) {
         </ContextMenuSub>
         <ContextMenuSeparator />
       </template>
-      <ContextMenuLabel inset class="select-none text-gray-400">옮기기</ContextMenuLabel>
-      <ContextMenuItem v-if="item.parent" @select="moveUp()"><ArrowBigUpIcon />위로</ContextMenuItem>
-      <ContextMenuSub>
-        <ContextMenuSubTrigger inset v-if="childFolders.length > 0">아래로</ContextMenuSubTrigger>
-        <ContextMenuSubContent v-if="childFolders.length > 0">
-          <ContextMenuItem v-for="folder in childFolders" @select="moveDown(folder.guid)">{{ folder.name }}</ContextMenuItem>
-        </ContextMenuSubContent>
-      </ContextMenuSub>
+      <tempalte v-if="itemType === 'main'">
+        <ContextMenuLabel inset class="select-none text-gray-400">옮기기</ContextMenuLabel>
+        <ContextMenuItem v-if="item.parent" @select="moveUp()"><ArrowBigUpIcon />위로</ContextMenuItem>
+        <ContextMenuSub>
+          <ContextMenuSubTrigger inset v-if="childFolders.length > 0">아래로</ContextMenuSubTrigger>
+          <ContextMenuSubContent v-if="childFolders.length > 0">
+            <ContextMenuItem v-for="folder in childFolders" @select="moveDown(folder.guid)">{{ folder.name }}</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuSub>
+      </tempalte>
       <ContextMenuItem><MapPinIcon />지정 위치로</ContextMenuItem>
       <ContextMenuSeparator />
       <ContextMenuItem><SettingsIcon />편집</ContextMenuItem>
