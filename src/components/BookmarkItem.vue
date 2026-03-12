@@ -4,7 +4,7 @@ import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBi
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@components/ui/context-menu";
 import { BookmarkType, BrowserType } from "@/bookmarks/enums";
-import { Bookmark } from "..";
+import { Bookmark } from "../bookmarks";
 import { computed } from "vue";
 import { useAlertDialog } from "@/stores/useAlertDialog";
 import provider from "@/bookmarks/provider";

@@ -2,9 +2,9 @@
 import _ from "lodash";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import provider from "@/bookmarks/provider";
-import { BookmarkItem } from "@/bookmarks/ui";
 import { Bookmark } from "@/bookmarks";
+import { BookmarkItem } from "@/components";
+import provider from "@/bookmarks/provider";
 
 const route = useRoute();
 const items = ref<Bookmark[]>(provider.getBookmarks(route.path));
