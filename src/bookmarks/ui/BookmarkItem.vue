@@ -1,19 +1,22 @@
 <script setup lang="ts">
 import { Item, ItemContent, ItemTitle, ItemMedia, ItemActions } from "@components/ui/item";
-import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBigUpIcon, MapPinIcon, SettingsIcon } from "lucide-vue-next";
+import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBigUpIcon, MapPinIcon, SettingsIcon, Trash2Icon } from "lucide-vue-next";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@components/ui/context-menu";
 import { BookmarkType, BrowserType } from "@/bookmarks/enums";
 import { Bookmark } from "..";
 import { computed } from "vue";
+import { useAlertDialog } from "@/stores/useAlertDialog";
 import provider from "@/bookmarks/provider";
 
 export type BookmarkItemType = 'command' | 'main';
+
 declare interface BookmarkItemProps {
   itemType?: BookmarkItemType,
   item: Bookmark,
 };
 
+const alertDialog = useAlertDialog();
 const props = defineProps<BookmarkItemProps>();
 const clazz = computed<string[] | undefined>(() => {
   if (props.itemType === 'main') return ['basis-lg', 'max-w-lg'];
@@ -43,6 +46,17 @@ function moveDown(guid: string) {
   props.item.parent = guid;
   provider.bus.emit('update', befo);
 };
+
+async function deleteItem(item: Bookmark) {
+  const confirmed = await alertDialog.open({
+    title: '정말로 삭제 하시겠습니까?',
+    description: item.type === BookmarkType.FOLDER ? '폴더의 경우 하위의 모든 항목이 같이 삭제 됩니다.' : undefined,
+    type: 'confirm',
+    actionText: '삭제',
+    cancelText: '취소'
+  });
+  if (!confirmed) return;
+}
 
 </script>
 
@@ -83,8 +97,8 @@ function moveDown(guid: string) {
         </ContextMenuSub>
         <ContextMenuSeparator />
       </template>
-      <tempalte v-if="itemType === 'main'">
-        <ContextMenuLabel inset class="select-none text-gray-400">옮기기</ContextMenuLabel>
+      <template v-if="itemType === 'main'">
+        <ContextMenuLabel inset class="select-none text-gray-400">위치 이동</ContextMenuLabel>
         <ContextMenuItem v-if="item.parent" @select="moveUp()"><ArrowBigUpIcon />위로</ContextMenuItem>
         <ContextMenuSub>
           <ContextMenuSubTrigger inset v-if="childFolders.length > 0">아래로</ContextMenuSubTrigger>
@@ -92,10 +106,12 @@ function moveDown(guid: string) {
             <ContextMenuItem v-for="folder in childFolders" @select="moveDown(folder.guid)">{{ folder.name }}</ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
-      </tempalte>
+      </template>
       <ContextMenuItem><MapPinIcon />지정 위치로</ContextMenuItem>
       <ContextMenuSeparator />
       <ContextMenuItem><SettingsIcon />편집</ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuItem variant="destructive" @select="deleteItem(item)"><Trash2Icon />삭제</ContextMenuItem>
     </ContextMenuContent>
   </ContextMenu>
 </template>

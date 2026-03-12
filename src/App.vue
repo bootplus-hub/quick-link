@@ -2,15 +2,16 @@
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Switch } from "@components/ui/switch";
+import { GlobalAlertDialog } from '@/components';
 import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Main } from '@views/main';
-import provider from './bookmarks/provider';
 import { Bookmark } from './bookmarks';
 import { AcceptableValue, type ListboxItemSelectEvent } from "reka-ui";
 import { useRouter } from 'vue-router';
 import { BookmarkItem } from './bookmarks/ui';
+import provider from './bookmarks/provider';
 
 useColorMode({
   selector: 'html', // html 태그에 'dark' 클래스를 입힘
@@ -120,5 +121,7 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
         </CommandGroup>
       </CommandList>
     </CommandDialog>
+
+    <GlobalAlertDialog />
   </div>
 </template>
