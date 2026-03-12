@@ -10,7 +10,7 @@ import { Main } from '@views/main';
 import { Bookmark } from './bookmarks';
 import { AcceptableValue, type ListboxItemSelectEvent } from "reka-ui";
 import { useRouter } from 'vue-router';
-import { BookmarkItem } from './bookmarks/ui';
+import { BookmarkItem } from '@/components';
 import provider from './bookmarks/provider';
 
 useColorMode({
