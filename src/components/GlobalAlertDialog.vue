@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useAlertDialog } from '@/stores/useAlertDialog';
+import { useAlertDialog } from '@/stores';
 import {
   AlertDialog,
   AlertDialogAction,

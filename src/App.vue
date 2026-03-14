@@ -2,7 +2,7 @@
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Switch } from "@components/ui/switch";
-import { GlobalAlertDialog } from '@/components';
+import { GlobalAlertDialog, GlobalBookmarkModal } from '@/components';
 import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
@@ -122,6 +122,7 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
       </CommandList>
     </CommandDialog>
 
+    <GlobalBookmarkModal />
     <GlobalAlertDialog />
   </div>
 </template>

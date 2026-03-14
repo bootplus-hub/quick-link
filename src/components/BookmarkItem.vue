@@ -6,7 +6,7 @@ import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, Con
 import { BookmarkType, BrowserType } from "@/bookmarks/enums";
 import { Bookmark } from "../bookmarks";
 import { computed } from "vue";
-import { useAlertDialog } from "@/stores/useAlertDialog";
+import { useAlertDialog, useBookmarkModal } from "@/stores";
 import provider from "@/bookmarks/provider";
 
 export type BookmarkItemType = 'command' | 'main';
@@ -17,6 +17,7 @@ declare interface BookmarkItemProps {
 };
 
 const alertDialog = useAlertDialog();
+const bookmarkModal = useBookmarkModal();
 const props = defineProps<BookmarkItemProps>();
 const clazz = computed<string[] | undefined>(() => {
   if (props.itemType === 'main') return ['basis-lg', 'max-w-lg'];
@@ -47,16 +48,22 @@ function moveDown(guid: string) {
   provider.bus.emit('update', befo);
 };
 
-async function deleteItem(item: Bookmark) {
+async function openModifyModal() {
+  if (await bookmarkModal.open(props.item)) {
+    provider.bus.emit('update', props.item.parent);
+  }
+}
+
+async function deleteItem() {
   const confirmed = await alertDialog.open({
     title: '정말로 삭제 하시겠습니까?',
-    description: item.type === BookmarkType.FOLDER ? '폴더의 경우 하위의 모든 항목이 같이 삭제 됩니다.' : undefined,
+    description: props.item.type === BookmarkType.FOLDER ? '폴더의 경우 하위의 모든 항목이 같이 삭제 됩니다.' : undefined,
     type: 'confirm',
     actionText: '삭제',
     cancelText: '취소'
   });
   if (!confirmed) return;
-}
+};
 
 </script>
 
@@ -109,9 +116,9 @@ async function deleteItem(item: Bookmark) {
       </template>
       <ContextMenuItem><MapPinIcon />지정 위치로</ContextMenuItem>
       <ContextMenuSeparator />
-      <ContextMenuItem><SettingsIcon />편집</ContextMenuItem>
+      <ContextMenuItem @select="openModifyModal()"><SettingsIcon />편집</ContextMenuItem>
       <ContextMenuSeparator />
-      <ContextMenuItem variant="destructive" @select="deleteItem(item)"><Trash2Icon />삭제</ContextMenuItem>
+      <ContextMenuItem variant="destructive" @select="deleteItem()"><Trash2Icon />삭제</ContextMenuItem>
     </ContextMenuContent>
   </ContextMenu>
 </template>
