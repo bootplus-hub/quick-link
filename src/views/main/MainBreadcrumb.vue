@@ -4,7 +4,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { ChevronDownIcon, MapIcon, MapPinCheckIcon, MapPinnedIcon } from "lucide-vue-next";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-import { BookmarkType } from "@/bookmarks/enums";
 import provider from "@/bookmarks/provider";
 import _ from "lodash";
 
@@ -19,7 +18,7 @@ function getItem (guid: string): Item {
   if (_.isNil(current)) return {};
 
   const sibling = provider.getBookmarks(current?.parent ?? '/')
-      .filter(bm => bm.type === BookmarkType.FOLDER)
+      .filter(bm => bm.type === 'folder')
       .map(bm => {
         return {
           name: bm.name,

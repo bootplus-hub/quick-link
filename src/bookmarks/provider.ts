@@ -1,8 +1,7 @@
 import _ from "lodash";
 import dayjs from "dayjs";
 import { Ref, ref } from "vue";
-import { Bookmark, ChromiumBookmark, ChromiumBookmarks } from ".";
-import { BookmarkType, BrowserType } from "./enums";
+import { Bookmark, BookmarkType, BrowserType, ChromiumBookmark, ChromiumBookmarks } from ".";
 import { IPCResponse } from "@/ipc";
 import mitt from "mitt";
 
@@ -26,7 +25,7 @@ class BookmarkImpl implements Bookmark {
     public parent?: string
   ) {
     this.guid = guid;
-    this.type = type === BookmarkType.URL ? BookmarkType.URL : BookmarkType.FOLDER,
+    this.type = type === 'url' ? 'url' : 'folder',
     this.name = name;
     this.visit = visit;
     this.browser = browser;
@@ -35,8 +34,8 @@ class BookmarkImpl implements Bookmark {
   }
 
   getPath (target?: BrowserType): string {
-    if (this.type === BookmarkType.FOLDER) return `#/${this.guid}`;
-    return this.browser === (target ?? BrowserType.EDGE)
+    if (this.type === 'folder') return `#/${this.guid}`;
+    return this.browser === (target ?? 'edge')
       ? `microsoft-edge:${this.url ?? ''}`
       : `google-chrome:${this.url ?? ''}`;
   }
@@ -53,7 +52,7 @@ class BookmarkImpl implements Bookmark {
   static ofBrowser (browser: BrowserType, node: ChromiumBookmark, parent?: Bookmark): BookmarkImpl {
     return new BookmarkImpl(
       node.guid,
-      node.type === BookmarkType.URL ? BookmarkType.URL : BookmarkType.FOLDER,
+      node.type === 'url' ? 'url' : 'folder',
       node.name,
       0,
       browser,
@@ -92,7 +91,7 @@ class Sorter {
       if (a.visit !== b.visit) return b.visit - a.visit;
       else a.name.localeCompare(b.name);
     }
-    return a.type === BookmarkType.FOLDER ? -1 : 1;
+    return a.type === 'folder' ? -1 : 1;
   }
 };
 
@@ -154,7 +153,7 @@ export class BookmarkProvider {
     if (!res.success) throw res.error;
     const data = res.data as ChromiumBookmarks;
     if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
-    const items = forFlatingToBookmarks(BrowserType.EDGE, data.roots.bookmark_bar.children)
+    const items = forFlatingToBookmarks('edge', data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
     this.bookmarks.push(...items);
     this.lastUpdateAt.value = timestamp();
@@ -170,7 +169,7 @@ export class BookmarkProvider {
     if (!res.success) throw res.error;
     const data = res.data as ChromiumBookmarks;
     if (data.checksum === this.chrome.checksum) throw '새로운 내용이 없습니다.';
-    const items = forFlatingToBookmarks(BrowserType.CHROME, data.roots.bookmark_bar.children)
+    const items = forFlatingToBookmarks('chrome', data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
     this.bookmarks.push(...items);
     this.lastUpdateAt.value = timestamp();
@@ -192,7 +191,7 @@ export class BookmarkProvider {
 
   public getCommands (): Bookmark[] {
     return this.bookmarks
-      .filter(item => item.type === BookmarkType.URL)
+      .filter(item => item.type === 'url')
       .sort(Sorter.compareDefault);
   }
 

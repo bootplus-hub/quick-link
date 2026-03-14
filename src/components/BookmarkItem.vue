@@ -3,7 +3,6 @@ import { Item, ItemContent, ItemTitle, ItemMedia, ItemActions } from "@component
 import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBigUpIcon, MapPinIcon, SettingsIcon, Trash2Icon } from "lucide-vue-next";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@components/ui/context-menu";
-import { BookmarkType, BrowserType } from "@/bookmarks/enums";
 import { Bookmark } from "../bookmarks";
 import { computed } from "vue";
 import { useAlertDialog, useBookmarkModal } from "@/stores";
@@ -27,7 +26,7 @@ const variant = computed<'outline' | undefined>(() => {
 });
 const childFolders = computed<Bookmark[]>(() => {
   return provider.getBookmarks(props.item.getParentPath())
-    .filter(item => item.type === BookmarkType.FOLDER && item.guid !== props.item.guid);
+    .filter(item => item.type === 'folder' && item.guid !== props.item.guid);
 });
 
 function incrementVisitCount () {
@@ -57,7 +56,7 @@ async function openModifyModal() {
 async function deleteItem() {
   const confirmed = await alertDialog.open({
     title: '정말로 삭제 하시겠습니까?',
-    description: props.item.type === BookmarkType.FOLDER ? '폴더의 경우 하위의 모든 항목이 같이 삭제 됩니다.' : undefined,
+    description: props.item.type === 'folder' ? '폴더의 경우 하위의 모든 항목이 같이 삭제 됩니다.' : undefined,
     type: 'confirm',
     actionText: '삭제',
     cancelText: '취소'
@@ -73,7 +72,7 @@ async function deleteItem() {
       <Item :variant="variant" size="sm" :class="clazz" as-child>
         <a :href="`${item.getPath()}`" @click="incrementVisitCount()">
           <ItemMedia>
-            <FolderIcon v-if="item.type === BookmarkType.FOLDER" class="size-5" />
+            <FolderIcon v-if="item.type === 'folder'" class="size-5" />
             <Avatar v-else class="size-5">
               <AvatarImage :src="item.getIconUrl()" />
               <AvatarFallback>
@@ -87,19 +86,19 @@ async function deleteItem() {
             </ItemTitle>
           </ItemContent>
           <ItemActions>
-            <ChevronRightIcon v-if="item.type === BookmarkType.FOLDER" class="size-4" />
+            <ChevronRightIcon v-if="item.type === 'folder'" class="size-4" />
             <ExternalLinkIcon v-else class="size-4" />
           </ItemActions>
         </a>
       </Item>
     </ContextMenuTrigger>
     <ContextMenuContent class="w-50">
-      <template v-if="item.type === BookmarkType.URL">
+      <template v-if="item.type === 'url'">
         <ContextMenuSub>
           <ContextMenuSubTrigger inset>열기</ContextMenuSubTrigger>
           <ContextMenuSubContent>
-            <ContextMenuItem as-child><a :href="item.getPath(BrowserType.EDGE)"><ExternalLinkIcon />Edge</a></ContextMenuItem>
-            <ContextMenuItem as-child><a :href="item.getPath(BrowserType.CHROME)"><ExternalLinkIcon />Chrome</a></ContextMenuItem>
+            <ContextMenuItem as-child><a :href="item.getPath('edge')"><ExternalLinkIcon />Edge</a></ContextMenuItem>
+            <ContextMenuItem as-child><a :href="item.getPath('chrome')"><ExternalLinkIcon />Chrome</a></ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
         <ContextMenuSeparator />

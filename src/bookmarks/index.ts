@@ -1,5 +1,7 @@
 import _ from "lodash";
-import { BookmarkType, BrowserType } from "./enums.ts";
+
+export type BookmarkType = 'folder' | 'url';
+export type BrowserType = 'edge' | 'chrome';
 
 export interface Bookmark {
   url?: string,
