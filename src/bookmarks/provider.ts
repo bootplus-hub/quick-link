@@ -110,7 +110,7 @@ export class BookmarkProvider {
   private static singleton: BookmarkProvider;
   private edge: BrowserSource = {};
   private chrome: BrowserSource = {};
-  private bookmarks: Bookmark[] = [];
+  private readonly bookmarks: Map<string, Bookmark> = new Map<string, Bookmark>();
   public readonly bus = mitt<ProviderEvents>();
   public readonly lastUpdateAt: Ref<string> = ref(timestamp());
 
@@ -130,7 +130,8 @@ export class BookmarkProvider {
     this.edge.timestamp = data.edge?.timestamp ?? undefined;
     this.chrome.checksum = data.chrome?.checksum ?? undefined;
     this.chrome.timestamp = data.chrome?.timestamp ?? undefined;
-    this.bookmarks = data.bookmarks?.map(BookmarkImpl.ofBookmark) ?? [];
+    (data.bookmarks?.map(BookmarkImpl.ofBookmark) ?? [])
+      .forEach(bookmark => this.bookmarks.set(bookmark.guid, bookmark));
     this.lastUpdateAt.value = data.lastUpdateAt ?? timestamp();
     this.bus.emit('update');
   }
@@ -139,7 +140,7 @@ export class BookmarkProvider {
     const data: ProviderData = {};
     data.edge = this.edge;
     data.chrome = this.chrome;
-    data.bookmarks = this.bookmarks;
+    data.bookmarks = [...this.bookmarks.values()];
     data.lastUpdateAt = this.lastUpdateAt.value;
     const rst: IPCResponse = await window.ipcRenderer.dispatchBookmarks(data);
     if (rst.success) return;
@@ -155,7 +156,7 @@ export class BookmarkProvider {
     if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
     const items = forFlatingToBookmarks('edge', data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
-    this.bookmarks.push(...items);
+    items.forEach(item => this.bookmarks.set(item.guid, item));
     this.lastUpdateAt.value = timestamp();
     this.bus.emit('update');
     _.set(this.edge, 'checksum', data.checksum);
@@ -171,7 +172,7 @@ export class BookmarkProvider {
     if (data.checksum === this.chrome.checksum) throw '새로운 내용이 없습니다.';
     const items = forFlatingToBookmarks('chrome', data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
-    this.bookmarks.push(...items);
+    items.forEach(item => this.bookmarks.set(item.guid, item));
     this.lastUpdateAt.value = timestamp();
     this.bus.emit('update');
     _.set(this.chrome, 'checksum', data.checksum);
@@ -180,17 +181,18 @@ export class BookmarkProvider {
   }
 
   public getBookmark (guid: string): Bookmark | undefined {
-    return this.bookmarks.find(item => item.guid === guid);
+    return this.bookmarks.get(guid);
   }
 
   public getBookmarks (path: string): Bookmark[] {
     const guid = _.last(path.split('/'));
-    return this.bookmarks.filter(item => (item.parent ?? '') === guid)
+    return [...this.bookmarks.values()]
+      .filter(item => (item.parent ?? '') === guid)
       .sort(Sorter.compareDefault);
   }
 
   public getCommands (): Bookmark[] {
-    return this.bookmarks
+    return [...this.bookmarks.values()]
       .filter(item => item.type === 'url')
       .sort(Sorter.compareDefault);
   }
@@ -201,7 +203,7 @@ export class BookmarkProvider {
   }
 
   private checkNewBookmark (item: Bookmark): boolean {
-    return !this.bookmarks.some(bookmark => bookmark.guid === item.guid || bookmark.url === item.url);
+    return !this.bookmarks.has(item.guid);
   }
 };
 
