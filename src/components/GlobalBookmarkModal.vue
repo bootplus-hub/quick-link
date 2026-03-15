@@ -13,7 +13,7 @@ import { SaveIcon } from "lucide-vue-next";
 const store = useBookmarkModal();
 const modifyFormSchema = z.object({
   name: z.string().min(1, { message: '* 이름은 최소 1글자 이상이어야 합니다.' }),
-  url: z.string().url('* URL 형식이 아닙니다.'),
+  url: z.string().url('* URL 형식이 아닙니다.').nullable(),
 });
 type ModifyFormValues = z.infer<typeof modifyFormSchema>;
 const form = useForm<ModifyFormValues>({
@@ -28,12 +28,13 @@ watch(() => store.isOpen, val => {
   if (val) {
     form.setValues({
       name: store.item?.name,
-      url: store.item?.url,
+      url: store.item?.url ?? null,
     });
   }
 });
 
 function handleOpenChange (_open: boolean) {
+  console.log('handleOpenChange');
   store.cancel();
   form.resetForm();
 }
@@ -63,7 +64,7 @@ const handleSubmit = form.handleSubmit(values => {
             <FormMessage />
           </FormItem>
         </FormField>
-        <FormField v-slot="{ componentField }" name="url">
+        <FormField v-if="store.item?.type == 'url'" v-slot="{ componentField }" name="url">
           <FormItem>
             <FormLabel>URL 주소</FormLabel>
             <FormControl>
@@ -73,7 +74,6 @@ const handleSubmit = form.handleSubmit(values => {
           </FormItem>
         </FormField>
         <DialogFooter>
-          <Button @click="store.cancel">취소</Button>
           <Button type="submit" variant="secondary"><SaveIcon /> 저장</Button>
         </DialogFooter>
       </form>
