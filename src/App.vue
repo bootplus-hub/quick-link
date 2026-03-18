@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import "vue-sonner/style.css"
+import { Toaster } from "@/components/ui/sonner";
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Switch } from "@components/ui/switch";
@@ -29,6 +31,7 @@ const commands = ref<Bookmark[]>(provider.getCommands());
 
 function refresh (_path?: string) {
   commands.value = provider.getCommands();
+  provider.saveAsync();
 }
 
 onMounted(() => provider.bus.on('update', refresh));
@@ -37,10 +40,6 @@ onUnmounted(() => provider.bus.off('update', refresh));
 // Ctrl + K 단축키 감지
 watch([ctrl, k], ([ctrlValue, kValue]) => {
   if (ctrlValue && kValue) open.value = true
-});
-
-watch(() => provider.lastUpdateAt.value, () => {
-  provider.saveAsync();
 });
 
 function onLoadEdgeBookmarks () {
@@ -124,5 +123,6 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
 
     <GlobalBookmarkModal />
     <GlobalAlertDialog />
+    <Toaster position="top-right" />
   </div>
 </template>

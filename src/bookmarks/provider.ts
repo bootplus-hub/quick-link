@@ -106,13 +106,28 @@ export type ProviderEvents = {
   'update': string | undefined;
 };
 
+export interface BookmarkCreateDto {
+  type: BookmarkType,
+  name: string,
+  browser: BrowserType,
+  url?: string,
+  parent?: string,
+};
+export interface BookmarkModifyDto {
+  guid: string,
+  name: string,
+  browser: BrowserType,
+  url?: string,
+  parent?: string,
+};
+
 export class BookmarkProvider {
   private static singleton: BookmarkProvider;
   private edge: BrowserSource = {};
   private chrome: BrowserSource = {};
-  private readonly bookmarks: Map<string, Bookmark> = new Map<string, Bookmark>();
+  private readonly bookmarks: Map<string, BookmarkImpl> = new Map<string, BookmarkImpl>();
+  private readonly lastUpdateAt: Ref<string> = ref(timestamp());
   public readonly bus = mitt<ProviderEvents>();
-  public readonly lastUpdateAt: Ref<string> = ref(timestamp());
 
   private constructor () {
     this.loadAsync();
@@ -157,8 +172,7 @@ export class BookmarkProvider {
     const items = forFlatingToBookmarks('edge', data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
     items.forEach(item => this.bookmarks.set(item.guid, item));
-    this.lastUpdateAt.value = timestamp();
-    this.bus.emit('update');
+    this.changeLatestUpdate();
     _.set(this.edge, 'checksum', data.checksum);
     _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
     if (items.length === 0) throw '추가할 내용이 없습니다.';
@@ -173,8 +187,7 @@ export class BookmarkProvider {
     const items = forFlatingToBookmarks('chrome', data.roots.bookmark_bar.children)
         .filter(this.checkNewBookmark, this);
     items.forEach(item => this.bookmarks.set(item.guid, item));
-    this.lastUpdateAt.value = timestamp();
-    this.bus.emit('update');
+    this.changeLatestUpdate();
     _.set(this.chrome, 'checksum', data.checksum);
     _.set(this.chrome, 'timestamp', this.lastUpdateAt.value);
     if (items.length === 0) throw '추가할 내용이 없습니다.';
@@ -200,6 +213,45 @@ export class BookmarkProvider {
   public getRouterTreePath (bookmark?: Bookmark): string {
     if (_.isNil(bookmark?.parent)) return `/${bookmark?.guid ?? ''}`;
     return this.getRouterTreePath(this.getBookmark(bookmark.parent)) + `/${bookmark.guid}`;
+  }
+
+  public setBookmark (dto: BookmarkModifyDto): boolean {
+    if (!dto.guid) return false;
+    if (!this.bookmarks.has(dto.guid)) return false;
+    const item = this.bookmarks.get(dto.guid)!;
+    item.name = dto.name;
+    item.browser = dto.browser;
+    item.parent = dto.parent;
+    if (item.type === 'url') {
+      item.url = dto.url;
+    }
+    this.changeLatestUpdate();
+    return true;
+  }
+
+  public addBookmark (dto: BookmarkCreateDto) {
+    const guid = window.crypto.randomUUID();
+    this.bookmarks.set(guid, new BookmarkImpl(
+      guid,
+      dto.type,
+      dto.name,
+      0,
+      dto.browser,
+      dto.url,
+      dto.parent
+    ));
+    this.changeLatestUpdate();
+  }
+
+  public removeBookmark (guid: string): boolean {
+    const rtn = this.bookmarks.delete(guid);
+    if (rtn) this.changeLatestUpdate();
+    return rtn;
+  }
+
+  public changeLatestUpdate () {
+    this.lastUpdateAt.value = timestamp();
+    this.bus.emit('update');
   }
 
   private checkNewBookmark (item: Bookmark): boolean {

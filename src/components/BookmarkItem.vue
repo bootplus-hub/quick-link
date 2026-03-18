@@ -48,7 +48,7 @@ function moveDown(guid: string) {
 };
 
 async function openModifyModal() {
-  if (await bookmarkModal.open(props.item)) {
+  if (await bookmarkModal.openModify(props.item)) {
     provider.bus.emit('update', props.item.parent);
   }
 }
