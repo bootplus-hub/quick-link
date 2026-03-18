@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { Ref, ref } from "vue";
 import { Bookmark, BookmarkType, BrowserType, ChromiumBookmark, ChromiumBookmarks } from ".";
 import { IPCResponse } from "@/ipc";
+import { toast } from "vue-sonner";
 import mitt from "mitt";
 
 function timestamp (): string {
@@ -160,37 +161,51 @@ export class BookmarkProvider {
     const rst: IPCResponse = await window.ipcRenderer.dispatchBookmarks(data);
     if (rst.success) return;
     console.error(rst.error);
-    throw '북마크 저장 실패';
+    toast.error('북마크 저장 실패');
   }
 
   public async loadEdgeBookmarksAsync () {
-    window.ipcRenderer.syncEdgeFavicons();
-    const res = await window.ipcRenderer.fetchEdgeBookmarks() as IPCResponse;
-    if (!res.success) throw res.error;
-    const data = res.data as ChromiumBookmarks;
-    if (data.checksum === this.edge.checksum) throw '새로운 내용이 없습니다.';
-    const items = forFlatingToBookmarks('edge', data.roots.bookmark_bar.children)
-        .filter(this.checkNewBookmark, this);
-    items.forEach(item => this.bookmarks.set(item.guid, item));
-    this.changeLatestUpdate();
-    _.set(this.edge, 'checksum', data.checksum);
-    _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
-    if (items.length === 0) throw '추가할 내용이 없습니다.';
+    try {
+      window.ipcRenderer.syncEdgeFavicons();
+      const res = await window.ipcRenderer.fetchEdgeBookmarks() as IPCResponse;
+      if (!res.success) throw res.error;
+      const data = res.data as ChromiumBookmarks;
+      if (data.checksum === this.edge.checksum) throw 'Edge 브라우저에 새로운 내용이 없습니다.';
+      const items = forFlatingToBookmarks('edge', data.roots.bookmark_bar.children)
+          .filter(this.checkNewBookmark, this);
+      items.forEach(item => this.bookmarks.set(item.guid, item));
+      this.changeLatestUpdate();
+      _.set(this.edge, 'checksum', data.checksum);
+      _.set(this.edge, 'timestamp', this.lastUpdateAt.value);
+      if (items.length === 0) throw 'Edge 브라우저에서 추가할 내용이 없습니다.';
+    } catch (message) {
+      if (typeof(message) === 'string')
+        toast.info(message as string);
+      else
+        toast.error('북마크 정보를 가져오는데 실패 했습니다.');
+    }
   }
 
   public async loadChromeBookmarksAsync () {
-    window.ipcRenderer.syncChromeFavicons();
-    const res = await window.ipcRenderer.fetchChromeBookmarks() as IPCResponse;
-    if (!res.success) throw res.error;
-    const data = res.data as ChromiumBookmarks;
-    if (data.checksum === this.chrome.checksum) throw '새로운 내용이 없습니다.';
-    const items = forFlatingToBookmarks('chrome', data.roots.bookmark_bar.children)
-        .filter(this.checkNewBookmark, this);
-    items.forEach(item => this.bookmarks.set(item.guid, item));
-    this.changeLatestUpdate();
-    _.set(this.chrome, 'checksum', data.checksum);
-    _.set(this.chrome, 'timestamp', this.lastUpdateAt.value);
-    if (items.length === 0) throw '추가할 내용이 없습니다.';
+    try {
+      window.ipcRenderer.syncChromeFavicons();
+      const res = await window.ipcRenderer.fetchChromeBookmarks() as IPCResponse;
+      if (!res.success) throw res.error;
+      const data = res.data as ChromiumBookmarks;
+      if (data.checksum === this.chrome.checksum) throw 'Chrome 브라우저에 새로운 내용이 없습니다.';
+      const items = forFlatingToBookmarks('chrome', data.roots.bookmark_bar.children)
+          .filter(this.checkNewBookmark, this);
+      items.forEach(item => this.bookmarks.set(item.guid, item));
+      this.changeLatestUpdate();
+      _.set(this.chrome, 'checksum', data.checksum);
+      _.set(this.chrome, 'timestamp', this.lastUpdateAt.value);
+      if (items.length === 0) throw 'Chrome 브라우저에서 추가할 내용이 없습니다.';
+    } catch (message) {
+      if (typeof(message) === 'string')
+        toast.info(message as string);
+      else
+        toast.error('북마크 정보를 가져오는데 실패 했습니다.');
+    }
   }
 
   public getBookmark (guid: string): Bookmark | undefined {

@@ -43,15 +43,11 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
 });
 
 function onLoadEdgeBookmarks () {
-  provider.loadEdgeBookmarksAsync().catch(error => {
-    console.log(error);
-  });
+  provider.loadEdgeBookmarksAsync();
 }
 
 function onLoadChromeBookmarks () {
-  provider.loadChromeBookmarksAsync().catch(error => {
-    console.log(error);
-  });
+  provider.loadChromeBookmarksAsync();
 }
 
 function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
