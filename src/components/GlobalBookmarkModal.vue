@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogDescription, DialogFooter, D
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { Input } from "./ui/input";
+import Breadcrumb from "./Breadcrumb.vue";
 
 const store = useBookmarkModal();
 const modifyFormSchema = z.object({
@@ -17,6 +18,7 @@ const modifyFormSchema = z.object({
   url: z.string().url('* URL 형식이 아닙니다.').nullable(),
   browser: z.enum(['edge', 'chrome']),
   type: z.enum(['folder', 'url']).nullable(),
+  location: z.string(),
 });
 type ModifyFormValues = z.infer<typeof modifyFormSchema>;
 const form = useForm<ModifyFormValues>({
@@ -26,6 +28,7 @@ const form = useForm<ModifyFormValues>({
     url: '',
     browser: 'edge',
     type: null,
+    location: '/',
   }
 });
 
@@ -36,6 +39,7 @@ watch(() => store.isOpen, val => {
       url: store.item?.url ?? null,
       browser: store.item?.browser ?? 'edge',
       type: store.createType ?? null,
+      location: `/${store.item?.parent ?? ''}`
     });
   }
 });
@@ -52,7 +56,7 @@ const handleSubmit = form.handleSubmit(values => {
       name: values.name,
       browser: values.browser,
       url: values.url ?? undefined,
-      parent: store.item?.parent,
+      parent: values.location === '/' ? undefined : values.location.substring(1),
     })) return;
   } else {
     if (!store.save({
@@ -60,7 +64,7 @@ const handleSubmit = form.handleSubmit(values => {
       name: values.name,
       browser: values.browser,
       url: values.url ?? undefined,
-      parent: store.item?.parent,
+      parent: values.location === '/' ? undefined : values.location.substring(1),
     })) return;
   }
   form.resetForm();
@@ -107,6 +111,15 @@ const handleSubmit = form.handleSubmit(values => {
             </FormItem>
           </FormField>
         </template>
+        <FormField v-slot="{ componentField }" name="location">
+          <FormItem>
+            <FormLabel>위치</FormLabel>
+            <FormControl>
+              <Breadcrumb v-bind="componentField" type="selector" :limit="2" :target="store.item" />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
         <DialogFooter>
           <Button type="submit" variant="secondary"><SaveIcon /> 저장</Button>
         </DialogFooter>

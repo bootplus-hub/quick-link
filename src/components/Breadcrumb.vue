@@ -6,7 +6,7 @@ import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useVModel } from "@vueuse/core";
 import _ from "lodash";
-import provider from "@/bookmarks/provider";
+import provider, { BookmarkModifyDto } from "@/bookmarks/provider";
 
 export type BreadcrumbType = 'router' | 'selector';
 
@@ -15,6 +15,7 @@ export interface BreadcrumbProps {
   defaultValue?: string,
   limit?: number,
   type?: BreadcrumbType,
+  target?: BookmarkModifyDto,
 };
 
 export type BreadcrumbEmits = {
@@ -24,7 +25,7 @@ export type BreadcrumbEmits = {
 declare interface Item {
   name?: string,
   path?: string,
-  sibling?: Item[],
+  siblings?: Item[],
 };
 
 const props = withDefaults(defineProps<BreadcrumbProps>(), {
@@ -56,11 +57,23 @@ const items = computed<Item[]>(() => {
   return rtn;
 });
 
+const childrens = computed<Item[]>(() => {
+  if (props.type === 'router') return [];
+  return provider.getBookmarks(modelValue.value ?? '/')
+      .filter(bm => bm.type === 'folder' && bm.guid !== props.target?.guid)
+      .map(bm => {
+        return {
+          name: bm.name,
+          path: `/${bm.guid}`,
+        };
+      });
+});
+
 function getItem (guid: string): Item {
   const current = provider.getBookmark(guid);
   if (!current) return {};
 
-  const sibling = provider.getBookmarks(current?.parent ?? '/')
+  const siblings = provider.getBookmarks(current?.parent ?? '/')
       .filter(bm => bm.type === 'folder')
       .map(bm => {
         return {
@@ -72,7 +85,7 @@ function getItem (guid: string): Item {
   return {
     name: current.name,
     path: `/${current.guid}`,
-    sibling: sibling,
+    siblings,
   };
 }
 </script>
@@ -85,30 +98,49 @@ function getItem (guid: string): Item {
           <BreadcrumbPage v-if="(modelValue ?? '/') === '/'">Home</BreadcrumbPage>
           <BreadcrumbLink v-else as-child>
             <router-link v-if="props.type === 'router'" to="/">Home</router-link>
-            <a v-else @click="emits('update:modelValue', '/')">Home</a>
+            <a v-else class="cursor-pointer" @click="emits('update:modelValue', '/')">Home</a>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <template v-for="item in items">
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbEllipsis v-if="_.isEmpty(item)" class="h-4 w-4" />
-            <BreadcrumbPage v-else-if="_.isEmpty(item.sibling)">{{ item.name }}</BreadcrumbPage>
+            <BreadcrumbPage v-else-if="_.isEmpty(item.siblings)">{{ item.name }}</BreadcrumbPage>
             <DropdownMenu v-else>
               <DropdownMenuTrigger class="flex items-center gap-1 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-3.5">
                 {{ item.name }}
                 <ChevronDownIcon />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
-                <DropdownMenuItem v-for="sb in item.sibling" as-child>
+                <DropdownMenuItem v-for="sb in item.siblings" as-child>
                   <router-link v-if="props.type === 'router'" :to="sb.path ?? '/'">
                     <MapPinCheckIcon v-if="sb.path === item.path" class="size-4" />
                     <MapIcon v-else class="size-4" />
                     {{ sb.name }}
                   </router-link>
-                  <a v-else @click="emits('update:modelValue', sb.path ?? '/')">
+                  <a v-else class="cursor-pointer" @click="emits('update:modelValue', sb.path ?? '/')">
                     <MapPinCheckIcon v-if="sb.path === item.path" class="size-4" />
                     <MapIcon v-else class="size-4" />
                     {{ sb.name }}
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </BreadcrumbItem>
+        </template>
+        <template v-if="childrens.length > 0">
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger class="flex items-center gap-1 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-3.5">
+                <MapIcon />
+                <ChevronDownIcon />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem v-for="child in childrens" as-child>
+                  <a class="cursor-pointer" @click="emits('update:modelValue', child.path ?? '/')">
+                    <MapIcon class="size-4" />
+                    {{ child.name }}
                   </a>
                 </DropdownMenuItem>
               </DropdownMenuContent>
