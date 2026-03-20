@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Item, ItemContent, ItemTitle, ItemMedia, ItemActions } from "@components/ui/item";
-import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBigUpIcon, MapPinIcon, SettingsIcon, Trash2Icon } from "lucide-vue-next";
+import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBigUpIcon, SettingsIcon, Trash2Icon } from "lucide-vue-next";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@components/ui/context-menu";
 import { Bookmark } from "../bookmarks";
@@ -29,7 +29,8 @@ const childFolders = computed<Bookmark[]>(() => {
     .filter(item => item.type === 'folder' && item.guid !== props.item.guid);
 });
 
-function incrementVisitCount () {
+function visit () {
+  window.location.href = props.item.getPath();
   props.item.visit++;
   provider.bus.emit('update', props.item.getParentPath());
 };
@@ -70,7 +71,7 @@ async function deleteItem() {
   <ContextMenu>
     <ContextMenuTrigger as-child>
       <Item :variant="variant" size="sm" :class="clazz" as-child>
-        <a :href="`${item.getPath()}`" @click="incrementVisitCount()">
+        <a class="cursor-pointer" @click="visit()">
           <ItemMedia>
             <FolderIcon v-if="item.type === 'folder'" class="size-5" />
             <Avatar v-else class="size-5">
@@ -109,13 +110,11 @@ async function deleteItem() {
         <ContextMenuSub>
           <ContextMenuSubTrigger inset v-if="childFolders.length > 0">아래로</ContextMenuSubTrigger>
           <ContextMenuSubContent v-if="childFolders.length > 0">
-            <ContextMenuItem v-for="folder in childFolders" @select="moveDown(folder.guid)">{{ folder.name }}</ContextMenuItem>
+            <ContextMenuItem inset v-for="folder in childFolders" @select="moveDown(folder.guid)">{{ folder.name }}</ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
+        <ContextMenuItem @select="openModifyModal()"><SettingsIcon />편집</ContextMenuItem>
       </template>
-      <ContextMenuItem><MapPinIcon />지정 위치로</ContextMenuItem>
-      <ContextMenuSeparator />
-      <ContextMenuItem @select="openModifyModal()"><SettingsIcon />편집</ContextMenuItem>
       <ContextMenuSeparator />
       <ContextMenuItem variant="destructive" @select="deleteItem()"><Trash2Icon />삭제</ContextMenuItem>
     </ContextMenuContent>
