@@ -2,20 +2,23 @@
 import { Breadcrumb, BreadcrumbList, BreadcrumbEllipsis, BreadcrumbSeparator, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage } from "@components/ui/breadcrumb";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ChevronDownIcon, MapIcon, MapPinCheckIcon, MapPinnedIcon } from "lucide-vue-next";
-import { computed, ref, watch } from "vue";
+import { computed, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useVModel } from "@vueuse/core";
 import _ from "lodash";
 import provider from "@/bookmarks/provider";
 
 export type BreadcrumbType = 'router' | 'selector';
 
 export interface BreadcrumbProps {
-  path: string,
+  modelValue?: string,
+  defaultValue?: string,
   limit?: number,
   type?: BreadcrumbType,
 };
 
 export type BreadcrumbEmits = {
-  'update:path': [value: string]
+  'update:modelValue': [value: string]
 };
 
 declare interface Item {
@@ -29,15 +32,22 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
   type: 'router'
 });
 
-const emit = defineEmits<BreadcrumbEmits>();
+const emits = defineEmits<BreadcrumbEmits>();
 
-const path = ref('/');
+const route = useRoute();
+const modelValue = useVModel(props, 'modelValue', emits, {
+  passive: true,
+  defaultValue: props.defaultValue ?? '/',
+});
 
-watch(() => props.path, (val) => path.value = val, { immediate: true });
+watch(() => route.path, (val) => {
+  if (props.type === 'router') modelValue.value = val;
+}, { immediate: true });
 
 const items = computed<Item[]>(() => {
-  const guids = path.value === '/' ? []
-    : provider.getRouterTreePath(provider.getBookmark(path.value.substring(1))).split('/').slice(1);
+  const location = modelValue.value ?? '/';
+  const guids = location === '/' ? []
+    : provider.getRouterTreePath(provider.getBookmark(location.substring(1))).split('/').slice(1);
   const ellipsis = guids.length > props.limit;
   const rtn = ellipsis
     ? guids.slice(-props.limit).map(guid => getItem(guid))
@@ -72,10 +82,10 @@ function getItem (guid: string): Item {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbPage v-if="path === '/'">Home</BreadcrumbPage>
+          <BreadcrumbPage v-if="(modelValue ?? '/') === '/'">Home</BreadcrumbPage>
           <BreadcrumbLink v-else as-child>
-            <router-link v-if="props.type === 'router'" to="/" @click="emit('update:path', '/')">Home</router-link>
-            <a v-else @click="emit('update:path', '/')">Home</a>
+            <router-link v-if="props.type === 'router'" to="/">Home</router-link>
+            <a v-else @click="emits('update:modelValue', '/')">Home</a>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <template v-for="item in items">
@@ -90,12 +100,12 @@ function getItem (guid: string): Item {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem v-for="sb in item.sibling" as-child>
-                  <router-link v-if="props.type === 'router'" :to="sb.path ?? '/'" @click="emit('update:path', sb.path ?? '/')">
+                  <router-link v-if="props.type === 'router'" :to="sb.path ?? '/'">
                     <MapPinCheckIcon v-if="sb.path === item.path" class="size-4" />
                     <MapIcon v-else class="size-4" />
                     {{ sb.name }}
                   </router-link>
-                  <a v-else @click="emit('update:path', sb.path ?? '/')">
+                  <a v-else @click="emits('update:modelValue', sb.path ?? '/')">
                     <MapPinCheckIcon v-if="sb.path === item.path" class="size-4" />
                     <MapIcon v-else class="size-4" />
                     {{ sb.name }}

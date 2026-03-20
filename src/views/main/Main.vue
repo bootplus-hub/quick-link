@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import MainBreadcrumb from "./MainBreadcrumb.vue";
+import { Breadcrumb } from "@/components";
 </script>
 
 <template>
   <div class="flex flex-col p-4 mt-10 gap-4 overflow-auto">
-    <MainBreadcrumb />
+    <Breadcrumb />
     <router-view />
   </div>
 </template>
