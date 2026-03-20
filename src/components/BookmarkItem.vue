@@ -19,7 +19,9 @@ const alertDialog = useAlertDialog();
 const bookmarkModal = useBookmarkModal();
 const props = defineProps<BookmarkItemProps>();
 const clazz = computed<string[] | undefined>(() => {
-  if (props.itemType === 'main') return ['basis-lg', 'max-w-lg'];
+  const rtn = ['select-none'];
+  if (props.itemType === 'main') rtn.push(...['basis-lg', 'max-w-lg']);
+  return rtn;
 });
 const variant = computed<'outline' | undefined>(() => {
   if (props.itemType === 'main') return 'outline';
