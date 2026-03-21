@@ -104,9 +104,9 @@ async function deleteItem() {
             <ContextMenuItem as-child><a :href="item.getPath('chrome')"><ExternalLinkIcon />Chrome</a></ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
-        <ContextMenuSeparator />
       </template>
       <template v-if="itemType === 'main'">
+        <ContextMenuSeparator />
         <ContextMenuLabel inset class="select-none text-gray-400">위치 이동</ContextMenuLabel>
         <ContextMenuItem v-if="item.parent" @select="moveUp()"><ArrowBigUpIcon />위로</ContextMenuItem>
         <ContextMenuSub>
@@ -115,9 +115,9 @@ async function deleteItem() {
             <ContextMenuItem inset v-for="folder in childFolders" @select="moveDown(folder.guid)">{{ folder.name }}</ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
-        <ContextMenuItem @select="openModifyModal()"><SettingsIcon />편집</ContextMenuItem>
       </template>
       <ContextMenuSeparator />
+      <ContextMenuItem @select="openModifyModal()"><SettingsIcon />편집</ContextMenuItem>
       <ContextMenuItem variant="destructive" @select="deleteItem()"><Trash2Icon />삭제</ContextMenuItem>
     </ContextMenuContent>
   </ContextMenu>

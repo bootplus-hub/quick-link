@@ -6,12 +6,16 @@ import { Bookmark, BookmarkType } from '@/bookmarks';
 import provider, { BookmarkCreateDto, BookmarkModifyDto } from '@/bookmarks/provider';
 
 export type BookmarkModalType = 'create' | 'modify';
+export interface CreateDto {
+  type: BookmarkType,
+  location: string,
+};
 
 export const useBookmarkModal = defineStore('bookmarkModal', () => {
   const isOpen = ref(false);
-  const item = ref<BookmarkModifyDto|undefined>();
   const modalType = ref<BookmarkModalType>('create');
-  const createType = ref<BookmarkType|undefined>();
+  const modifyDto = ref<BookmarkModifyDto|undefined>();
+  const createDto = ref<CreateDto|undefined>();
   let resolvePromise: (value: boolean) => void;
 
   const open = (): Promise<boolean> => {
@@ -19,15 +23,15 @@ export const useBookmarkModal = defineStore('bookmarkModal', () => {
     return new Promise((resolve) => resolvePromise = resolve);
   };
   const openModify = (bookmark: Bookmark): Promise<boolean> => {
-    item.value = _.cloneDeep(bookmark);
     modalType.value = 'modify';
-    createType.value = undefined;
+    modifyDto.value = _.cloneDeep(bookmark);
+    createDto.value = undefined;
     return open();
   };
-  const openCreate = (type: BookmarkType): Promise<boolean> => {
-    item.value = undefined;
+  const openCreate = (type: BookmarkType, location: string): Promise<boolean> => {
     modalType.value = 'create';
-    createType.value = type;
+    modifyDto.value = undefined;
+    createDto.value = { type, location };
     return open();
   };
 
@@ -43,14 +47,14 @@ export const useBookmarkModal = defineStore('bookmarkModal', () => {
     isOpen.value = false;
     resolvePromise(true);
     toast.info('저장을 성공 했습니다.');
-    item.value = undefined;
+    modifyDto.value = undefined;
     return true;
   };
 
   const cancel = () => {
     isOpen.value = false;
     resolvePromise(false);
-    item.value = undefined;
+    modifyDto.value = undefined;
   };
-  return { isOpen, item, modalType, createType, openModify, openCreate, save, cancel };
+  return { isOpen, modifyDto, modalType, createDto, openModify, openCreate, save, cancel };
 });

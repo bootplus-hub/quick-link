@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import "vue-sonner/style.css"
 import { Toaster } from "@/components/ui/sonner";
-import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar';
+import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, MenubarSub, MenubarSubTrigger, MenubarSubContent, MenubarSeparator } from '@/components/ui/menubar';
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Switch } from "@components/ui/switch";
 import { GlobalAlertDialog, GlobalBookmarkModal } from '@/components';
-import { SunIcon, MoonIcon, MenuIcon, FolderSyncIcon } from "lucide-vue-next";
+import { SunIcon, MoonIcon, MenuIcon, SaveIcon, FolderPlusIcon, SquareStarIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Main } from '@views/main';
-import { Bookmark } from './bookmarks';
+import { Bookmark, BookmarkType } from './bookmarks';
 import { AcceptableValue, type ListboxItemSelectEvent } from "reka-ui";
 import { useRouter } from 'vue-router';
 import { BookmarkItem } from '@/components';
+import { useBookmarkModal } from "./stores";
 import provider from './bookmarks/provider';
 
 useColorMode({
@@ -26,6 +27,7 @@ const open = ref(false);
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
 const router = useRouter();
+const bookmarkModal = useBookmarkModal();
 
 const commands = ref<Bookmark[]>(provider.getCommands());
 
@@ -41,6 +43,10 @@ onUnmounted(() => provider.bus.off('update', refresh));
 watch([ctrl, k], ([ctrlValue, kValue]) => {
   if (ctrlValue && kValue) open.value = true
 });
+
+function handleCreateBookmark (type: BookmarkType) {
+  bookmarkModal.openCreate(type, router.currentRoute.value.path);
+}
 
 function onLoadEdgeBookmarks () {
   provider.loadEdgeBookmarksAsync();
@@ -71,9 +77,18 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
             <MenubarMenu>
               <MenubarTrigger class="text-xs bg-background/80 font-bold"><MenuIcon class="size-4" /></MenubarTrigger>
               <MenubarContent>
-                <MenubarItem class="text-xs" @select="onLoadEdgeBookmarks()"><FolderSyncIcon />Edge 데이터 가져오기</MenubarItem>
-                <MenubarItem class="text-xs" @select="onLoadChromeBookmarks()"><FolderSyncIcon />Chrome 데이터 가져오기</MenubarItem>
-                <MenubarItem class="text-xs">Settings</MenubarItem>
+                <MenubarItem class="text-xs" @select="handleCreateBookmark('folder')"><FolderPlusIcon />새 폴더</MenubarItem>
+                <MenubarItem class="text-xs" @select="handleCreateBookmark('url')"><SquareStarIcon />새 북마크</MenubarItem>
+                <MenubarSeparator />
+                <MenubarSub>
+                  <MenubarSubTrigger class="text-xs" inset>가져오기</MenubarSubTrigger>
+                  <MenubarSubContent class="w-40">
+                    <MenubarItem class="text-xs" inset @select="onLoadEdgeBookmarks()">Edge 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" inset @select="onLoadChromeBookmarks()">Chrome 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" inset >백업 데이터</MenubarItem>
+                  </MenubarSubContent>
+                </MenubarSub>
+                <MenubarItem class="text-xs"><SaveIcon />내보내기</MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -110,7 +125,7 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Bookmarks">
-          <CommandItem v-for="item in commands" :value="item" class="cursor-pointer" as-child @select="onSelectCommand">
+          <CommandItem v-for="item in commands" :value="item.name" class="cursor-pointer pt-0 pb-0 *:w-full" @select="onSelectCommand">
             <BookmarkItem item-type="command" :item="item" />
           </CommandItem>
         </CommandGroup>

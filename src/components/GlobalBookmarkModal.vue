@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as z from "zod";
-import { watch } from "vue";
+import { computed, watch } from "vue";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { SaveIcon } from "lucide-vue-next";
@@ -32,14 +32,25 @@ const form = useForm<ModifyFormValues>({
   }
 });
 
+const hasUrl = computed<boolean>(() => {
+  if (store.modalType === 'create' && store.createDto?.type === 'url') return true;
+  if (store.modalType === 'modify' && store.modifyDto?.url) return true;
+  return false;
+});
+
+const title = computed<string>(() => {
+  if (store.modalType === 'modify') return '편집';
+  return `새 ${store.createDto?.type === 'folder' ? '폴더' : '북마크'}`
+});
+
 watch(() => store.isOpen, val => {
   if (val) {
     form.setValues({
-      name: store.item?.name ?? '',
-      url: store.item?.url ?? null,
-      browser: store.item?.browser ?? 'edge',
-      type: store.createType ?? null,
-      location: `/${store.item?.parent ?? ''}`
+      name: store.modifyDto?.name ?? '',
+      url: store.modifyDto?.url ?? null,
+      browser: store.modifyDto?.browser ?? 'edge',
+      type: store.createDto?.type ?? null,
+      location: store.createDto?.location ?? `/${store.modifyDto?.parent ?? ''}`
     });
   }
 });
@@ -52,7 +63,7 @@ function handleOpenChange (_open: boolean) {
 const handleSubmit = form.handleSubmit(values => {
   if (store.modalType === 'modify') {
     if (!store.save({
-      guid: store.item!.guid,
+      guid: store.modifyDto!.guid,
       name: values.name,
       browser: values.browser,
       url: values.url ?? undefined,
@@ -60,7 +71,7 @@ const handleSubmit = form.handleSubmit(values => {
     })) return;
   } else {
     if (!store.save({
-      type: store.createType!,
+      type: store.createDto!.type,
       name: values.name,
       browser: values.browser,
       url: values.url ?? undefined,
@@ -75,8 +86,8 @@ const handleSubmit = form.handleSubmit(values => {
   <Dialog :open="store.isOpen" @update:open="handleOpenChange">
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>편집</DialogTitle>
-        <DialogDescription>편집 후 저장을 눌러주세요</DialogDescription>
+        <DialogTitle>{{ title }}</DialogTitle>
+        <DialogDescription>{{ store.modalType === 'modify' ? '편집' : '작성' }} 후 저장을 눌러주세요</DialogDescription>
       </DialogHeader>
       <form @submit="handleSubmit" class="flex flex-col gap-4">
         <FormField v-slot="{ componentField }" name="name">
@@ -88,7 +99,7 @@ const handleSubmit = form.handleSubmit(values => {
             <FormMessage />
           </FormItem>
         </FormField>
-        <template v-if="store.item?.url">
+        <template v-if="hasUrl">
           <FormField v-slot="{ componentField }" name="url">
             <FormItem>
               <FormLabel>URL 주소</FormLabel>
@@ -115,7 +126,7 @@ const handleSubmit = form.handleSubmit(values => {
           <FormItem>
             <FormLabel>위치</FormLabel>
             <FormControl>
-              <Breadcrumb v-bind="componentField" type="selector" :limit="2" :target="store.item" />
+              <Breadcrumb v-bind="componentField" type="selector" :limit="2" :target="store.modifyDto" />
             </FormControl>
             <FormMessage />
           </FormItem>
