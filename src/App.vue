@@ -5,7 +5,7 @@ import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem, Menu
 import { CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '@/components/ui/command';
 import { Switch } from "@components/ui/switch";
 import { GlobalAlertDialog, GlobalBookmarkModal } from '@/components';
-import { SunIcon, MoonIcon, MenuIcon, SaveIcon, FolderPlusIcon, SquareStarIcon } from "lucide-vue-next";
+import { SunIcon, MoonIcon, MenuIcon, SaveIcon, FolderPlusIcon, SquareStarIcon, ImportIcon } from "lucide-vue-next";
 import { useMagicKeys, useColorMode, useDark, useToggle } from '@vueuse/core';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { Main } from '@views/main';
@@ -83,9 +83,9 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
                 <MenubarSub>
                   <MenubarSubTrigger class="text-xs" inset>가져오기</MenubarSubTrigger>
                   <MenubarSubContent class="w-40">
-                    <MenubarItem class="text-xs" inset @select="onLoadEdgeBookmarks()">Edge 데이터</MenubarItem>
-                    <MenubarItem class="text-xs" inset @select="onLoadChromeBookmarks()">Chrome 데이터</MenubarItem>
-                    <MenubarItem class="text-xs" inset >백업 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" @select="onLoadEdgeBookmarks()"><ImportIcon />Edge 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" @select="onLoadChromeBookmarks()"><ImportIcon />Chrome 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" ><ImportIcon />백업 데이터</MenubarItem>
                   </MenubarSubContent>
                 </MenubarSub>
                 <MenubarItem class="text-xs"><SaveIcon />내보내기</MenubarItem>
