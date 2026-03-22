@@ -36,7 +36,7 @@ function createWindow() {
       color: '#00000000',
       symbolColor: '#74b9ff'
     },
-    icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    icon: path.join(process.env.VITE_PUBLIC, 'icon-main.png'),
     webPreferences: {
       preload: path.resolve(__dirname, 'preload.mjs'),
       nodeIntegration: false, // 보안을 위해 false 권장
