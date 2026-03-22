@@ -2,7 +2,7 @@ import { ipcMain, app } from "electron";
 import fs from "node:fs/promises";
 import path from "node:path";
 import _ from "lodash";
-import { BookmarksChannel } from "../ipc";
+import { ChannelBookmarks } from "../ipc";
 import type { IPCResponse } from "@/ipc";
 import type { ProviderData } from "@/bookmarks/provider";
 
@@ -69,8 +69,8 @@ async function saveBookmarks (_event:Electron.IpcMainInvokeEvent, data: any): Pr
 };
 
 export default function install () {
-  ipcMain.handle(BookmarksChannel.GET_EDGE, getEdgeBookmarks);
-  ipcMain.handle(BookmarksChannel.GET_CHROME, getChromeBookmarks);
-  ipcMain.handle(BookmarksChannel.LOAD_BOOKMARKS, loadBookmarks);
-  ipcMain.handle(BookmarksChannel.SAVE_BOOKMARKS, saveBookmarks);
+  ipcMain.handle(ChannelBookmarks.GET_EDGE, getEdgeBookmarks);
+  ipcMain.handle(ChannelBookmarks.GET_CHROME, getChromeBookmarks);
+  ipcMain.handle(ChannelBookmarks.LOAD_BOOKMARKS, loadBookmarks);
+  ipcMain.handle(ChannelBookmarks.SAVE_BOOKMARKS, saveBookmarks);
 };

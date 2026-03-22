@@ -5,7 +5,7 @@ import sqlite from "better-sqlite3";
 import _ from "lodash";
 import type { Database } from "better-sqlite3";
 import { IPCResponse } from "@/ipc";
-import { FaviconChannel } from "../ipc";
+import { ChannelFavicon } from "../ipc";
 
 const DB_EDGE_PATH = path.join(app.getPath('userData'), 'favicons_edge.db');
 const DB_CHROME_PATH = path.join(app.getPath('userData'), 'favicons_chrome.db');
@@ -110,6 +110,6 @@ export class FaviconFactory {
 export default function install () {
   const factory = FaviconFactory.getInstance();
   protocol.handle('favicon', (req) => factory.find(req));
-  ipcMain.handle(FaviconChannel.SYNC_EDGE, () => factory.syncEdgeFavicons());
-  ipcMain.handle(FaviconChannel.SYNC_CHROME, () => factory.syncChromeFavicons());
+  ipcMain.handle(ChannelFavicon.SYNC_EDGE, () => factory.syncEdgeFavicons());
+  ipcMain.handle(ChannelFavicon.SYNC_CHROME, () => factory.syncChromeFavicons());
 };

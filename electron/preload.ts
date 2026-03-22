@@ -1,5 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron'
-import { BookmarksChannel, FaviconChannel } from "./ipc";
+import { ChannelBookmarks, ChannelFavicon } from "./ipc";
 import { ProviderData } from '@/bookmarks/provider';
 import { IPCResponse } from '@/ipc';
 
@@ -26,21 +26,21 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // 여기 추가시, src/vite-env.d.ts 에 정의 추가
   // ...
   fetchEdgeBookmarks(): Promise<IPCResponse> {
-    return ipcRenderer.invoke(BookmarksChannel.GET_EDGE);
+    return ipcRenderer.invoke(ChannelBookmarks.GET_EDGE);
   },
   fetchChromeBookmarks(): Promise<IPCResponse> {
-    return ipcRenderer.invoke(BookmarksChannel.GET_CHROME);
+    return ipcRenderer.invoke(ChannelBookmarks.GET_CHROME);
   },
   fetchBookmarks(): Promise<ProviderData> {
-    return ipcRenderer.invoke(BookmarksChannel.LOAD_BOOKMARKS);
+    return ipcRenderer.invoke(ChannelBookmarks.LOAD_BOOKMARKS);
   },
   dispatchBookmarks(data: ProviderData): Promise<IPCResponse> {
-    return ipcRenderer.invoke(BookmarksChannel.SAVE_BOOKMARKS, data);
+    return ipcRenderer.invoke(ChannelBookmarks.SAVE_BOOKMARKS, data);
   },
   syncEdgeFavicons(): Promise<IPCResponse> {
-    return ipcRenderer.invoke(FaviconChannel.SYNC_EDGE);
+    return ipcRenderer.invoke(ChannelFavicon.SYNC_EDGE);
   },
   syncChromeFavicons(): Promise<IPCResponse> {
-    return ipcRenderer.invoke(FaviconChannel.SYNC_CHROME);
+    return ipcRenderer.invoke(ChannelFavicon.SYNC_CHROME);
   },
 })
