@@ -65,6 +65,7 @@ async function deleteItem() {
     cancelText: '취소'
   });
   if (!confirmed) return;
+  provider.removeBookmark(props.item.guid);
 };
 
 </script>

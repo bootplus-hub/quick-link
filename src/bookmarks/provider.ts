@@ -258,15 +258,30 @@ export class BookmarkProvider {
     this.changeLatestUpdate();
   }
 
-  public removeBookmark (guid: string): boolean {
-    const rtn = this.bookmarks.delete(guid);
-    if (rtn) this.changeLatestUpdate();
-    return rtn;
+  public removeBookmark (guid: string) {
+    const type = this.bookmarks.get(guid)?.type;
+    if (type === 'folder') {
+      this.getBookmarks(guid)
+        .map(item => item.guid)
+        .forEach(this.removeTree, this);
+    }
+    this.bookmarks.delete(guid);
+    this.changeLatestUpdate();
   }
 
   public changeLatestUpdate () {
     this.lastUpdateAt.value = timestamp();
     this.bus.emit('update');
+  }
+
+  private removeTree (guid: string) {
+    const type = this.bookmarks.get(guid)?.type;
+    if (type === 'folder') {
+      this.getBookmarks(guid)
+        .map(item => item.guid)
+        .forEach(this.removeTree, this);
+    }
+    this.bookmarks.delete(guid);
   }
 
   private checkNewBookmark (item: Bookmark): boolean {
