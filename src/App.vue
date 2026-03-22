@@ -44,19 +44,27 @@ watch([ctrl, k], ([ctrlValue, kValue]) => {
   if (ctrlValue && kValue) open.value = true
 });
 
-function handleCreateBookmark (type: BookmarkType) {
+function createBookmark (type: BookmarkType) {
   bookmarkModal.openCreate(type, router.currentRoute.value.path);
 }
 
-function onLoadEdgeBookmarks () {
+function loadEdgeBookmarks () {
   provider.loadEdgeBookmarksAsync();
 }
 
-function onLoadChromeBookmarks () {
+function loadChromeBookmarks () {
   provider.loadChromeBookmarksAsync();
 }
 
-function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
+function importBackup () {
+  provider.importAsync();
+}
+
+function exportBackup () {
+  provider.exportAsync();
+}
+
+function selectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
   const item = event.detail.value as Bookmark;
   router.push(item.getParentPath());
   open.value = false;
@@ -77,18 +85,18 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
             <MenubarMenu>
               <MenubarTrigger class="text-xs bg-background/80 font-bold"><MenuIcon class="size-4" /></MenubarTrigger>
               <MenubarContent>
-                <MenubarItem class="text-xs" @select="handleCreateBookmark('folder')"><FolderPlusIcon />새 폴더</MenubarItem>
-                <MenubarItem class="text-xs" @select="handleCreateBookmark('url')"><SquareStarIcon />새 북마크</MenubarItem>
+                <MenubarItem class="text-xs" @select="createBookmark('folder')"><FolderPlusIcon />새 폴더</MenubarItem>
+                <MenubarItem class="text-xs" @select="createBookmark('url')"><SquareStarIcon />새 북마크</MenubarItem>
                 <MenubarSeparator />
                 <MenubarSub>
                   <MenubarSubTrigger class="text-xs" inset>가져오기</MenubarSubTrigger>
                   <MenubarSubContent class="w-40">
-                    <MenubarItem class="text-xs" @select="onLoadEdgeBookmarks()"><ImportIcon />Edge 데이터</MenubarItem>
-                    <MenubarItem class="text-xs" @select="onLoadChromeBookmarks()"><ImportIcon />Chrome 데이터</MenubarItem>
-                    <MenubarItem class="text-xs" ><ImportIcon />백업 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" @select="loadEdgeBookmarks()"><ImportIcon />Edge 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" @select="loadChromeBookmarks()"><ImportIcon />Chrome 데이터</MenubarItem>
+                    <MenubarItem class="text-xs" @select="importBackup()"><ImportIcon />백업 데이터</MenubarItem>
                   </MenubarSubContent>
                 </MenubarSub>
-                <MenubarItem class="text-xs"><SaveIcon />내보내기</MenubarItem>
+                <MenubarItem class="text-xs" @select="exportBackup()"><SaveIcon />내보내기</MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>
@@ -125,7 +133,7 @@ function onSelectCommand (event: ListboxItemSelectEvent<AcceptableValue>) {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Bookmarks">
-          <CommandItem v-for="item in commands" :value="item.name" class="cursor-pointer pt-0 pb-0 *:w-full" @select="onSelectCommand">
+          <CommandItem v-for="item in commands" :value="item.name" class="cursor-pointer pt-0 pb-0 *:w-full" @select="selectCommand">
             <BookmarkItem item-type="command" :item="item" />
           </CommandItem>
         </CommandGroup>

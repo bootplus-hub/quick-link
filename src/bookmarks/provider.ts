@@ -140,8 +140,7 @@ export class BookmarkProvider {
     return BookmarkProvider.singleton;
   }
 
-  public async loadAsync () {
-    const data:ProviderData = await window.ipcRenderer.fetchBookmarks();
+  private load (data: ProviderData) {
     this.edge.checksum = data.edge?.checksum ?? undefined;
     this.edge.timestamp = data.edge?.timestamp ?? undefined;
     this.chrome.checksum = data.chrome?.checksum ?? undefined;
@@ -152,16 +151,54 @@ export class BookmarkProvider {
     this.bus.emit('update');
   }
 
-  public async saveAsync () {
+  public async loadAsync () {
+    const data: ProviderData = await window.ipcRenderer.fetchBookmarks();
+    this.load(data);
+  }
+
+  public async importAsync () {
+    const res: IPCResponse = await window.ipcRenderer.importBookmarks();
+    if (!res.success) {
+      toast.error('처리 중 오류가 발생 했습니다.');
+      return;
+    }
+    if (res.canceled) {
+      toast.info('취소 되었습니다.');
+      return;
+    }
+    this.load(res.data);
+    toast.success('가져오기에 성공 했습니다.');
+  }
+
+  private getExportData (): ProviderData {
     const data: ProviderData = {};
     data.edge = this.edge;
     data.chrome = this.chrome;
     data.bookmarks = [...this.bookmarks.values()];
     data.lastUpdateAt = this.lastUpdateAt.value;
+    return data;
+  }
+
+  public async saveAsync () {
+    const data = this.getExportData();
     const rst: IPCResponse = await window.ipcRenderer.dispatchBookmarks(data);
     if (rst.success) return;
     console.error(rst.error);
     toast.error('북마크 저장 실패');
+  }
+
+  public async exportAsync () {
+    const data = this.getExportData();
+    const res: IPCResponse = await window.ipcRenderer.exportBookmarks(data);
+    if (!res.success) {
+      toast.error('처리 중 오류가 발생 했습니다.');
+      return;
+    }
+    if (res.canceled) {
+      toast.info('취소 되었습니다.');
+      return;
+    }
+    toast.success('내보내기에 성공 했습니다.');
   }
 
   public async loadEdgeBookmarksAsync () {

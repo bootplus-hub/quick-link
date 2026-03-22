@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { ipcMain, app, dialog } from "electron";
 import fs from "node:fs/promises";
 import path from "node:path";
 import _ from "lodash";
@@ -68,9 +68,44 @@ async function saveBookmarks (_event:Electron.IpcMainInvokeEvent, data: any): Pr
   }
 };
 
+async function exportBookmarks (_event:Electron.IpcMainInvokeEvent, data: any): Promise<IPCResponse> {
+  try {
+    const result = await dialog.showSaveDialog({
+      title: '내보내기',
+      defaultPath: path.join(app.getPath('desktop'), 'bookmarks.json'),
+      filters: [{ name: 'Bookmark Files', extensions: ['json'] }]
+    });
+    if (!result.canceled) {
+      const json = JSON.stringify(data);
+      await fs.writeFile(result.filePath, json, 'utf-8');
+    }
+    return { success: true, canceled: result.canceled };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
+async function importBookmarks (_event:Electron.IpcMainInvokeEvent): Promise<IPCResponse> {
+  try {
+    const result = await dialog.showOpenDialog({
+      title: '가져오기',
+      defaultPath: app.getPath('desktop'),
+      filters: [{ name: 'Bookmark Files', extensions: ['json'] }],
+      properties: ['openFile']
+    });
+    if (result.canceled) return { success: true, canceled: result.canceled };
+    const json = await fs.readFile(result.filePaths[0], 'utf-8');
+    return { success: true, canceled: result.canceled, data: JSON.parse(json) as ProviderData };
+  } catch (error) {
+    return { success: false, error };
+  }
+}
+
 export default function install () {
   ipcMain.handle(ChannelBookmarks.GET_EDGE, getEdgeBookmarks);
   ipcMain.handle(ChannelBookmarks.GET_CHROME, getChromeBookmarks);
   ipcMain.handle(ChannelBookmarks.LOAD_BOOKMARKS, loadBookmarks);
   ipcMain.handle(ChannelBookmarks.SAVE_BOOKMARKS, saveBookmarks);
+  ipcMain.handle(ChannelBookmarks.EXPORT_BOOKMARKS, exportBookmarks);
+  ipcMain.handle(ChannelBookmarks.IMPORT_BOOKMARKS, importBookmarks);
 };

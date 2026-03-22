@@ -37,6 +37,12 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   dispatchBookmarks(data: ProviderData): Promise<IPCResponse> {
     return ipcRenderer.invoke(ChannelBookmarks.SAVE_BOOKMARKS, data);
   },
+  exportBookmarks(data: ProviderData): Promise<IPCResponse> {
+    return ipcRenderer.invoke(ChannelBookmarks.EXPORT_BOOKMARKS, data);
+  },
+  importBookmarks(): Promise<IPCResponse> {
+    return ipcRenderer.invoke(ChannelBookmarks.IMPORT_BOOKMARKS);
+  },
   syncEdgeFavicons(): Promise<IPCResponse> {
     return ipcRenderer.invoke(ChannelFavicon.SYNC_EDGE);
   },
