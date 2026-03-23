@@ -1,13 +1,14 @@
 {
   "name": "quick-link",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build && electron-builder",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -45,5 +46,16 @@
     "vite-plugin-electron-renderer": "^0.14.5",
     "vue-tsc": "^2.0.26"
   },
-  "main": "dist-electron/main.js"
+  "main": "dist-electron/main.js",
+  "build": {
+    "appId": "kr.bootplus.quick-link",
+    "productName": "QuickLink",
+    "directories": {
+      "output": "dist-electron/dist"
+    },
+    "win": {
+      "target": ["dir"],
+      "icon": "public/icon-main.ico"
+    }
+  }
 }
