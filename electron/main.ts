@@ -27,6 +27,26 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 
 let win: BrowserWindow | null
 
+// --- 중복 실행 방지 로직 시작 ---
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) {
+  // 이미 실행 중인 인스턴스가 있다면 현재 프로세스 종료
+  app.quit()
+} else {
+  // 두 번째 인스턴스가 실행될 때 호출됨
+  app.on('second-instance', () => {
+    if (win) {
+      if (win.isMinimized()) win.restore() // 최소화되어 있다면 복구
+      win.focus() // 포커스 이동
+    }
+  })
+
+  // 앱 준비 완료 후 실행
+  app.whenReady().then(createWindow)
+}
+// --- 중복 실행 방지 로직 끝 ---
+
 function createWindow() {
   win = new BrowserWindow({
     titleBarStyle: 'hidden',
@@ -76,5 +96,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-app.whenReady().then(createWindow)

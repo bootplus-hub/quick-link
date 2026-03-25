@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build && electron-builder",
+    "build:iss": "npm run build && npm run iss",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "preview": "vite preview",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "iss": "iscc /Odist-build installer.iss"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -51,11 +53,18 @@
     "appId": "kr.bootplus.quick-link",
     "productName": "QuickLink",
     "directories": {
-      "output": "dist-electron/dist"
+      "output": "dist-build"
     },
     "win": {
       "target": ["dir"],
       "icon": "public/icon-main.ico"
-    }
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "asar": true
   }
 }
