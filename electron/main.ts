@@ -48,6 +48,7 @@ if (!gotTheLock) {
 // --- 중복 실행 방지 로직 끝 ---
 
 function createWindow() {
+  const isProd = !VITE_DEV_SERVER_URL;
   win = new BrowserWindow({
     titleBarStyle: 'hidden',
     titleBarOverlay: {
@@ -59,6 +60,7 @@ function createWindow() {
       preload: path.resolve(__dirname, 'preload.mjs'),
       nodeIntegration: false, // 보안을 위해 false 권장
       contextIsolation: true, // contextBridge를 쓰려면 true여야 함
+      devTools: !isProd, // 배포 환경에서만 false
     },
   })
 
@@ -70,6 +72,7 @@ function createWindow() {
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
   } else {
+    win.removeMenu(); // 상단 메뉴 제거
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
