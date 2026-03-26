@@ -3,6 +3,7 @@ import { Item, ItemContent, ItemTitle, ItemMedia, ItemActions } from "@component
 import { FolderIcon, CircleStarIcon, ExternalLinkIcon, ChevronRightIcon, ArrowBigUpIcon, SettingsIcon, Trash2Icon } from "lucide-vue-next";
 import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "@components/ui/context-menu";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@components/ui/tooltip";
 import { Bookmark } from "../bookmarks";
 import { computed } from "vue";
 import { useAlertDialog, useBookmarkModal } from "@/stores";
@@ -84,11 +85,20 @@ async function deleteItem() {
               </AvatarFallback>
             </Avatar>
           </ItemMedia>
-          <ItemContent class="min-w-0">
-            <ItemTitle class="text-xs min-w-0 w-full">
-              <span class="truncate">{{ item.name }}</span>
-            </ItemTitle>
-          </ItemContent>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger as-child>
+                <ItemContent class="min-w-0">
+                  <ItemTitle class="text-xs min-w-0 w-full">
+                    <span class="truncate">{{ item.name }}</span>
+                  </ItemTitle>
+                </ItemContent>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{{ item.name }}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <ItemActions>
             <ChevronRightIcon v-if="item.type === 'folder'" class="size-4" />
             <ExternalLinkIcon v-else class="size-4" />
