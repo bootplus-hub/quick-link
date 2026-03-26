@@ -20,7 +20,7 @@ const bookmarkModal = useBookmarkModal();
 const props = defineProps<BookmarkItemProps>();
 const clazz = computed<string[] | undefined>(() => {
   const rtn = ['select-none'];
-  if (props.itemType === 'main') rtn.push(...['basis-lg', 'max-w-lg']);
+  if (props.itemType === 'main') rtn.push(...['basis-3xs', 'max-w-3xs']);
   return rtn;
 });
 const variant = computed<'outline' | undefined>(() => {
