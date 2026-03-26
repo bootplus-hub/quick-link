@@ -85,7 +85,7 @@ async function deleteItem() {
               </AvatarFallback>
             </Avatar>
           </ItemMedia>
-          <TooltipProvider>
+          <TooltipProvider :disabled="props.itemType === 'command'">
             <Tooltip>
               <TooltipTrigger as-child>
                 <ItemContent class="min-w-0">
