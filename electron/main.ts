@@ -1,6 +1,7 @@
-import { app, BrowserWindow } from 'electron'
-import { fileURLToPath } from 'node:url'
-import path from 'node:path'
+import { app, BrowserWindow } from 'electron';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import windowStateKeeper from 'electron-window-state';
 import bookmarks from "./bookmarks";
 import favicons from "./favicon";
 import launcher from "./launcher";
@@ -49,7 +50,20 @@ if (!gotTheLock) {
 
 function createWindow() {
   const isProd = !VITE_DEV_SERVER_URL;
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: 600,  // 저장된 값이 없을 때 기본 가로 크기
+    defaultHeight: 500, // 저장된 값이 없을 때 기본 세로 크기
+  });
   win = new BrowserWindow({
+    // x, y, width, height 값을 관리자가 계산한 값으로 설정
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    // 최소 사이즈 설정 (필수)
+    minWidth: 600,
+    minHeight: 500,
+
     titleBarStyle: 'hidden',
     titleBarOverlay: {
       color: '#00000000',
@@ -67,14 +81,17 @@ function createWindow() {
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
-  })
+  });
+
+  // 창 크기 조절, 이동, 최대화 상태 자동 저장
+  mainWindowState.manage(win);
 
   if (VITE_DEV_SERVER_URL) {
-    win.loadURL(VITE_DEV_SERVER_URL)
+    win.loadURL(VITE_DEV_SERVER_URL);
   } else {
     win.removeMenu(); // 상단 메뉴 제거
     // win.loadFile('dist/index.html')
-    win.loadFile(path.join(RENDERER_DIST, 'index.html'))
+    win.loadFile(path.join(RENDERER_DIST, 'index.html'));
   }
 
   bookmarks();

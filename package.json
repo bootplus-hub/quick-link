@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
+    "electron-window-state": "^5.0.3",
     "iconv-lite": "^0.7.2",
     "lodash": "^4.17.23",
     "lucide-vue-next": "^0.563.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.13",
+    "@types/electron-window-state": "^2.0.34",
     "@types/lodash": "^4.17.23",
     "@vitejs/plugin-vue": "^5.0.4",
     "electron": "^30.0.1",
@@ -56,7 +58,9 @@
       "output": "dist-build"
     },
     "win": {
-      "target": ["dir"],
+      "target": [
+        "dir"
+      ],
       "icon": "public/icon-main.ico"
     },
     "files": [
