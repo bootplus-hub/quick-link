@@ -6,11 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build && electron-builder",
-    "build:iss": "npm run build && npm run iss",
+    "build:iss": "iscc /Odist-build installer.iss",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "preview": "vite preview",
-    "postinstall": "electron-builder install-app-deps",
-    "iss": "iscc /Odist-build installer.iss"
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
