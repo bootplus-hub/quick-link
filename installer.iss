@@ -24,6 +24,30 @@ SetupIconFile=public\icon-main.ico
 UninstallDisplayIcon={app}\{#AppExeName}
 ShowLanguageDialog=yes
 
+[CustomMessages]
+korean.StartupDescription=윈도우 시작 시 {#AppName} 자동 실행
+english.StartupDescription=Launch {#AppName} on Windows startup
+korean.OtherSettings=기타 설정:
+english.OtherSettings=Additional settings:
+korean.LaunchProgram=프로그램 실행
+english.LaunchProgram=Launch program
+; 사용자 데이터 삭제 확인
+korean.ConfirmDeleteData=사용자 설정 및 캐시 데이터도 모두 삭제하시겠습니까?
+english.ConfirmDeleteData=Do you want to delete all user settings and cache data?
+; 버전 체크 (다운그레이드 방지)
+korean.NewerVersionExists=이미 더 높은 버전이 설치되어 있습니다.%n설치를 취소합니다.
+english.NewerVersionExists=A newer version is already installed.%nSetup will now exit.
+; 프로그램 실행 중 (설치 중단)
+korean.AppStillRunning=프로그램이 아직 실행 중입니다.%n설치를 중단합니다.
+english.AppStillRunning=The application is still running.%nSetup will now exit.
+; 프로그램 종료 실패
+korean.CannotKillApp=프로그램을 종료할 수 없습니다.%n수동으로 종료 후 다시 실행해 주세요.
+english.CannotKillApp=The application could not be closed.%nPlease close it manually and run setup again.
+; 업데이트 전 자동 종료 안내
+korean.AppRunningUpdate={#AppName}이(가) 실행 중입니다.%n업데이트를 위해 자동으로 종료합니다.
+english.AppRunningUpdate={#AppName} is currently running.%nIt will be closed automatically for the update.
+
+
 [Languages]
 Name: "korean"; MessagesFile: "compiler:Languages\Korean.isl"
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -33,6 +57,7 @@ Source: "dist-build\win-unpacked\*"; DestDir: "{app}"; Flags: recursesubdirs ign
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "startupicon"; Description: "{cm:StartupDescription}"; GroupDescription: "{cm:OtherSettings}"; Flags: checkedonce
 
 [Icons]
 ;시작 메뉴 아이콘
@@ -42,9 +67,7 @@ Name: "{group}\Uninstall {#AppName}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\{#AppName}"; Filename: "{app}\{#AppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#AppExeName}"; \
-  Description: "프로그램 실행"; \
-  Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#AppExeName}"; Description: "{cm:LaunchProgram}"; Flags: nowait postinstall skipifsilent
 
 
 [Code]
@@ -147,8 +170,7 @@ begin
   if IsAppRunning() then
     begin
       if MsgBox(
-        '{#AppName}이(가) 실행 중입니다.' + #13#10 +
-        '업데이트를 위해 자동으로 종료합니다.',
+        ExpandConstant('{cm:AppRunningUpdate}'),
         mbInformation,
         MB_OKCANCEL
       ) = IDCANCEL then
@@ -160,8 +182,7 @@ begin
       if not KillApp then
         begin
           MsgBox(
-            '프로그램을 종료할 수 없습니다.' + #13#10 +
-            '수동으로 종료 후 다시 실행해 주세요.',
+            ExpandConstant('{cm:CannotKillApp}'),
             mbError,
             MB_OK
           );
@@ -174,8 +195,7 @@ begin
       if IsAppRunning() then
         begin
           MsgBox(
-            '프로그램이 아직 실행 중입니다.' + #13#10 +
-            '설치를 중단합니다.',
+            ExpandConstant('{cm:AppStillRunning}'),
             mbError,
             MB_OK
           );
@@ -192,8 +212,7 @@ begin
       if CompareVersions(InstalledVer, '{#AppVersion}') > 0 then
         begin
           MsgBox(
-            '이미 더 높은 버전이 설치되어 있습니다.' + #13#10 +
-            '설치를 취소합니다.',
+            ExpandConstant('{cm:NewerVersionExists}'),
             mbError,
             MB_OK
           );
@@ -217,7 +236,7 @@ begin
 
     if DirExists(UserDataPath) then
     begin
-      if MsgBox('사용자 설정 및 캐시 데이터도 모두 삭제하시겠습니까?',
+      if MsgBox(ExpandConstant('{cm:ConfirmDeleteData}'),
                 mbConfirmation, MB_YESNO) = IDYES then
       begin
         // 폴더와 내부 파일 모두 삭제
