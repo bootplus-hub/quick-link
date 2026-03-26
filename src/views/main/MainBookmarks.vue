@@ -23,7 +23,7 @@ onUnmounted(() => provider.bus.off('update', refresh));
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-2">
+  <div class="flex flex-wrap gap-2 gap-x-10">
     <BookmarkItem v-for="item in items" item-type="main" :item="item" />
   </div>
 </template>
