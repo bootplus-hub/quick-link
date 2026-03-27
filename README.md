@@ -1,7 +1,7 @@
 # Quick Link 🚀
 
 [![The MIT License](https://flat.badgen.net/badge/license/MIT/orange)](http://opensource.org/licenses/MIT)
-[![GitHub](https://flat.badgen.net/github/release/bootplus-hub/quick-link)](https://github.com/bootplus-hub/quick-link/releases)
+[![GitHub](https://flat.badgen.net/github/release/bootplus-hub/quick-link/releases)](https://github.com/bootplus-hub/quick-link/releases)
 
 A desktop utility designed to streamline your web navigation by centralizing and managing your browser bookmarks with intelligent prioritization.
 
