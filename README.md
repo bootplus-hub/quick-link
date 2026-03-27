@@ -5,6 +5,9 @@
 
 A desktop utility designed to streamline your web navigation by centralizing and managing your browser bookmarks with intelligent prioritization.
 
+![Screenshot](https://github.com/user-attachments/assets/41957fd7-7453-4ca7-b119-2307adac7ccd)
+
+
 ## ✨ Features
 - **Cross-Browser Compatibility** – Seamlessly supports both Microsoft Edge and Google Chrome.
 - **Bookmark Synchronization** – Effortlessly import and aggregate your favorite sites directly from your browser's bookmark files.
