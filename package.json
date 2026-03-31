@@ -9,7 +9,7 @@
     "build:iss": "iscc /Odist-build installer.iss",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "preview": "vite preview",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps && sudo chown root:root ./node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

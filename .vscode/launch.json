@@ -5,18 +5,52 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Main(Electron)",
+      "name": "Main(Windows)",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-      "windows": { "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd" },
+      "windows": {
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron.cmd"
+      },
       "args": [".", "--remote-debugging-port=9222"],
       "env": {
         "VITE_DEV_SERVER_URL": "http://localhost:5173"
       },
       "sourceMaps": true,
-      "outFiles": ["${workspaceFolder}/dist-electron/**/*.js", "${workspaceFolder}/dist-electron/**/*.mjs"],
+      "outFiles": [
+        "${workspaceFolder}/dist-electron/**/*.js",
+        "${workspaceFolder}/dist-electron/**/*.mjs"
+      ],
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/*",
+        "node_modules/*": "${workspaceFolder}/node_modules/*"
+      },
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Main(Container)",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+      "args": [
+        ".",
+        "--remote-debugging-port=9222",
+        // "--disable-gpu",
+        "--no-sandbox", // [필수] 컨테이너 내부에서 Chromium 샌드박스 권한 충돌 방지
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage" // [필수] 컨테이너의 기본 공유 메모리(64MB) 부족으로 인한 렌더러 크래시 방지
+      ],
+      "env": {
+        "VITE_DEV_SERVER_URL": "http://localhost:5173",
+        "ELECTRON_DISABLE_SANDBOX": "1" //샌드박스 강제 비활성화
+      },
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/dist-electron/**/*.js",
+        "${workspaceFolder}/dist-electron/**/*.mjs"
+      ],
       "sourceMapPathOverrides": {
         "webpack:///./*": "${workspaceFolder}/*",
         "node_modules/*": "${workspaceFolder}/node_modules/*"
@@ -34,8 +68,12 @@
   ],
   "compounds": [
     {
-      "name": "Full Debug",
-      "configurations": ["Main(Electron)", "Renderer(Electron)"]
+      "name": "Windows Debug",
+      "configurations": ["Main(Windows)", "Renderer(Electron)"]
+    },
+    {
+      "name": "Container Debug",
+      "configurations": ["Main(Container)", "Renderer(Electron)"]
     }
   ]
 }
