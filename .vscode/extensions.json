@@ -1,3 +1,11 @@
 {
-  "recommendations": ["Vue.volar"]
+  "recommendations": [
+    "Vue.volar", // Vue 3 공식 지원
+    "dbaeumer.vscode-eslint", // 코드 문법 검사
+    "esbenp.prettier-vscode", // 코드 포맷터
+    "bradlc.vscode-tailwindcss", // Tailwind CSS 자동 완성 및 하이라이팅
+    "ms-vscode.vscode-typescript-next", // 최신 TS 지원
+    "editorconfig.editorconfig", // EditConfig
+    "usernamehw.errorlens" // Error Lens
+  ]
 }
