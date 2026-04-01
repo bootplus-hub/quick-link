@@ -17,6 +17,9 @@
     "/tmp/.X11-unix:/tmp/.X11-unix",
     "-v",
     "${env:XDG_RUNTIME_DIR}/${env:WAYLAND_DISPLAY}:${env:XDG_RUNTIME_DIR}/${env:WAYLAND_DISPLAY}",
+    // 로컬의 .ssh 폴더를 컨테이너의 node 사용자 홈 디렉토리로 마운트
+    "-v",
+    "${localEnv:HOME}/.ssh:/home/node/.ssh:ro",
     //Electron(Chromium) Zygote 프로세스 생성을 위한 권한 부여
     "--security-opt",
     "seccomp=unconfined",
