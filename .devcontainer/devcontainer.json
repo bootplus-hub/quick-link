@@ -26,6 +26,11 @@
     "--cap-add=SYS_ADMIN"
   ],
 
+  "containerEnv": {
+    "EDGE_DATA_PATH": "resource/edge",
+    "CHROME_DATA_PATH": "resource/chrome"
+  },
+
   "customizations": {
     "vscode": {
       "settings": {

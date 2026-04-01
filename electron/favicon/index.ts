@@ -7,24 +7,28 @@ import type { Database } from "better-sqlite3";
 import { IPCResponse } from "@/ipc";
 import { ChannelFavicon } from "../ipc";
 
-const DB_EDGE_PATH = path.join(app.getPath('userData'), 'favicons_edge.db');
-const DB_CHROME_PATH = path.join(app.getPath('userData'), 'favicons_chrome.db');
+const DB_EDGE_PATH = path.join(app.getPath("userData"), "favicons_edge.db");
+const DB_CHROME_PATH = path.join(app.getPath("userData"), "favicons_chrome.db");
 
 declare interface FaviconRow {
-  image_data?: Buffer,
-  width?: number,
-};
+  image_data?: Buffer;
+  width?: number;
+}
 
-async function doQuery (domain: string, from?: Database): Promise<FaviconRow> {
+async function doQuery(domain: string, from?: Database): Promise<FaviconRow> {
   try {
-    const row = from?.prepare(`
+    const row = from
+      ?.prepare(
+        `
       SELECT b.image_data, b.width
       FROM icon_mapping m
       JOIN favicon_bitmaps b ON m.icon_id = b.icon_id
       WHERE m.page_url LIKE ? OR m.page_url LIKE ?
       ORDER BY b.width DESC
       LIMIT 1
-    `).get(`http://${domain}%`, `https://${domain}%`) as FaviconRow;
+    `,
+      )
+      .get(`http://${domain}%`, `https://${domain}%`) as FaviconRow;
     return row ?? {};
   } catch {
     return {};
@@ -32,48 +36,56 @@ async function doQuery (domain: string, from?: Database): Promise<FaviconRow> {
 }
 
 export class FaviconFactory {
-  private static factory:FaviconFactory;
-  public static getInstance () {
+  private static factory: FaviconFactory;
+  public static getInstance() {
     if (this.factory == null) this.factory = new FaviconFactory();
     return this.factory;
   }
 
-  private dbEdge?:Database;
-  private dbChrome?:Database;
+  private dbEdge?: Database;
+  private dbChrome?: Database;
 
   private constructor() {
     this.syncEdgeFavicons();
     this.syncChromeFavicons();
   }
 
-  async find (request: Request): Promise<Response> {
-    const domain = request.url.replace(/^favicon:\/+[\w\-]*\/+/i, '').split('/', 1)[0];
+  async find(request: Request): Promise<Response> {
+    const domain = request.url
+      .replace(/^favicon:\/+[\w\-]*\/+/i, "")
+      .split("/", 1)[0];
     try {
       const rows = [
         await doQuery(domain, this.dbEdge),
         await doQuery(domain, this.dbChrome),
       ];
-      const row = _.first(rows
-        .filter(item => item.image_data && item.width)
-        .sort((a, b) => (b.width ?? 0) - (a.width ?? 0)));
-      if (!row?.image_data) throw 'not found';
+      const row = _.first(
+        rows
+          .filter((item) => item.image_data && item.width)
+          .sort((a, b) => (b.width ?? 0) - (a.width ?? 0)),
+      );
+      if (!row?.image_data) throw "not found";
       return new Response(new Uint8Array(row!.image_data), {
-        headers: { 'Content-Type': 'image/png' }
+        headers: { "Content-Type": "image/png" },
       });
     } catch (err) {
-      console.warn('FaviconFactory.find failed:', domain, err);
+      console.warn("FaviconFactory.find failed:", domain, err);
       return new Response(null, { status: 404 });
     }
   }
 
-  async syncEdgeFavicons (_event?:Electron.IpcMainInvokeEvent): Promise<IPCResponse> {
+  async syncEdgeFavicons(
+    _event?: Electron.IpcMainInvokeEvent,
+  ): Promise<IPCResponse> {
     try {
       this.dbEdge?.close();
-      const orgPath = path.join(
-        process.env.LOCALAPPDATA || '',
-        'Microsoft/Edge/User Data/Default/Favicons'
-      );
-      console.debug('FaviconFactory.syncEdgeFavicons', orgPath);
+      const orgPath = process.env.EDGE_DATA_PATH
+        ? path.join(process.env.EDGE_DATA_PATH, "Favicons")
+        : path.join(
+            process.env.LOCALAPPDATA || "",
+            "Google/Chrome/User Data/Default/Favicons",
+          );
+      console.debug("FaviconFactory.syncEdgeFavicons", orgPath);
       await fs.copyFile(orgPath, DB_EDGE_PATH);
       return { success: true };
     } catch (err) {
@@ -81,19 +93,23 @@ export class FaviconFactory {
     } finally {
       this.dbEdge = new sqlite(DB_EDGE_PATH, {
         readonly: true, // 읽기 전용 모드 권장
-        fileMustExist: true
+        fileMustExist: true,
       });
     }
   }
 
-  async syncChromeFavicons (_event?:Electron.IpcMainInvokeEvent): Promise<IPCResponse> {
+  async syncChromeFavicons(
+    _event?: Electron.IpcMainInvokeEvent,
+  ): Promise<IPCResponse> {
     try {
       this.dbChrome?.close();
-      const orgPath = path.join(
-        process.env.LOCALAPPDATA || '',
-        'Google/Chrome/User Data/Default/Favicons'
-      );
-      console.debug('FaviconFactory.syncChromeFavicons', orgPath);
+      const orgPath = process.env.CHROME_DATA_PATH
+        ? path.join(process.env.CHROME_DATA_PATH, "Favicons")
+        : path.join(
+            process.env.LOCALAPPDATA || "",
+            "Google/Chrome/User Data/Default/Favicons",
+          );
+      console.debug("FaviconFactory.syncChromeFavicons", orgPath);
       await fs.copyFile(orgPath, DB_CHROME_PATH);
       return { success: true };
     } catch (err) {
@@ -101,15 +117,17 @@ export class FaviconFactory {
     } finally {
       this.dbChrome = new sqlite(DB_CHROME_PATH, {
         readonly: true, // 읽기 전용 모드 권장
-        fileMustExist: true
+        fileMustExist: true,
       });
     }
   }
-};
+}
 
-export default function install () {
+export default function install() {
   const factory = FaviconFactory.getInstance();
-  protocol.handle('favicon', (req) => factory.find(req));
+  protocol.handle("favicon", (req) => factory.find(req));
   ipcMain.handle(ChannelFavicon.SYNC_EDGE, () => factory.syncEdgeFavicons());
-  ipcMain.handle(ChannelFavicon.SYNC_CHROME, () => factory.syncChromeFavicons());
-};
+  ipcMain.handle(ChannelFavicon.SYNC_CHROME, () =>
+    factory.syncChromeFavicons(),
+  );
+}

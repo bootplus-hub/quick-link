@@ -1,0 +1,1272 @@
+{
+   "checksum": "e8a314c30dbe88e1b9eb77db2ab560d1",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "children": [ {
+               "date_added": "13271437313665512",
+               "date_last_used": "0",
+               "guid": "5c2b0ad8-f39d-477c-a3ee-431114b7d763",
+               "id": "3",
+               "name": "보물1",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://in.naver.com/hyjueng/challenge/322318734557344/322300877933120",
+               "visit_count": 0
+            }, {
+               "date_added": "13271437840807295",
+               "date_last_used": "0",
+               "guid": "d4de489c-3435-4d38-90f7-290c6895f919",
+               "id": "4",
+               "name": "오딘: 발할라 라이징 | [꿈의왈츠]무과금 공략- 비요른까지 클리어 -보물상자(총31개) 보스, 장비, 자동사냥 팁 - Daum 카페",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://cafe.daum.net/odin/DEHA/1507",
+               "visit_count": 0
+            }, {
+               "date_added": "13280765842245581",
+               "date_last_used": "0",
+               "guid": "d418b7aa-0191-4771-88ee-15882377ae3c",
+               "id": "5",
+               "name": "맥 부팅 USB 만들기 위한 모든 방법부터 사용법까지 - THIS IS WHY IM YOUNG",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://thisiswhyimyoung.com/%EB%A7%A5-%EB%B6%80%ED%8C%85-usb/",
+               "visit_count": 0
+            }, {
+               "date_added": "13285562588053356",
+               "date_last_used": "0",
+               "guid": "a0c1f480-ff84-4756-93d1-77df38bb7732",
+               "id": "6",
+               "name": "오딘: 발할라 라이징 | 보스 공략(~수드리) / 보물상자 41개 위치(~알브하임) - Daum 카페",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://cafe.daum.net/odin/DEHA/2627",
+               "visit_count": 0
+            }, {
+               "date_added": "13297951885650338",
+               "date_last_used": "0",
+               "guid": "fa91f526-213a-48fe-86f1-409d4748a3f5",
+               "id": "7",
+               "name": "오딘: 발할라 라이징 | [5챕 무스펠하임] 보물상자 위치 편집본 - Daum 카페",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://cafe.daum.net/odin/DEHA/3017",
+               "visit_count": 0
+            }, {
+               "date_added": "13297951892569704",
+               "date_last_used": "0",
+               "guid": "16f8e08c-d756-438d-956e-1d5e0dbb1ede",
+               "id": "8",
+               "name": "[오딘] 무기형상 보물상자 전지역 위치 한방에 끝~ : 네이버 블로그",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://m.blog.naver.com/iriver79/222746341656",
+               "visit_count": 0
+            }, {
+               "date_added": "13297963955684090",
+               "date_last_used": "0",
+               "guid": "2ab96e21-c2d1-4d2e-88e6-cc9a8e804adc",
+               "id": "9",
+               "name": "오딘: 발할라 라이징 | 1~5챕 보물상자 완결 - Daum 카페",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://cafe.daum.net/odin/DEHA/3159",
+               "visit_count": 0
+            }, {
+               "date_added": "13303549719890250",
+               "date_last_used": "13324360328308252",
+               "guid": "0facef36-4db8-4637-b7d4-b0cadd51ada5",
+               "id": "10",
+               "name": "아이템매니아",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "http://www.itemmania.com/",
+               "visit_count": 0
+            }, {
+               "date_added": "13305452590350753",
+               "date_last_used": "0",
+               "guid": "20ed2155-389c-4fb1-8f56-41560ae8c993",
+               "id": "11",
+               "name": "Google Sheets",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://docs.google.com/spreadsheets/u/0/?tgif=d",
+               "visit_count": 0
+            }, {
+               "date_added": "13306407874922328",
+               "date_last_used": "13417886909804166",
+               "guid": "fabe732e-2227-46d4-8bdb-bf03a91d944e",
+               "id": "12",
+               "name": "보탐매니저 - 무료. 리니지w, 리니지m, 리니지2m, 히트2, 오딘, 블소2, 트릭스터m, 데카론m, 로한, V4, 에오스, 카오스m, 킹덤, 바람, 아이온, R2 등 보탐봇",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://botammanager.blogspot.com/",
+               "visit_count": 1
+            }, {
+               "date_added": "13406394286438636",
+               "date_last_used": "13407085574117536",
+               "guid": "fcfa0ab1-fcbb-4051-a698-71a3a55ee4b5",
+               "id": "13",
+               "name": "바로템",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://www.barotem.com/",
+               "visit_count": 2
+            } ],
+            "date_added": "13271437349953426",
+            "date_last_used": "0",
+            "date_modified": "13406562320963520",
+            "guid": "06fdd4b4-558c-4423-b5e2-f34a564d62af",
+            "id": "2",
+            "name": "오딘",
+            "source": "unknown",
+            "type": "folder"
+         }, {
+            "children": [ {
+               "children": [ {
+                  "date_added": "13283677491823227",
+                  "date_last_used": "0",
+                  "guid": "0a9c841c-33e4-4a85-b91c-ee18baeae4e4",
+                  "id": "18",
+                  "name": "C#으로 Windows Service 만들기 : 네이버 블로그",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://blog.naver.com/PostView.nhn?blogId=hayeong28&logNo=221503755406&parentCategoryNo=&categoryNo=28&viewDate=&isShowPopularPosts=true&from=search",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13362926118016363",
+                  "date_last_used": "0",
+                  "guid": "85670f82-86f5-4bec-8391-505c50823998",
+                  "id": "19",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": ".NET CLI | Microsoft Learn",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://learn.microsoft.com/en-us/dotnet/core/tools/",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13283355345639779",
+                  "date_last_used": "0",
+                  "guid": "88636b80-88dd-404a-ae38-cf908db015b3",
+                  "id": "20",
+                  "name": "GitHub - rvknth043/Global-Low-Level-Key-Board-And-Mouse-Hook: A simple description and sample of creating a global low level keyboard And Mouse hook in C#",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://github.com/rvknth043/Global-Low-Level-Key-Board-And-Mouse-Hook",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13284214153362576",
+                  "date_last_used": "0",
+                  "guid": "c6a83b1a-efca-4b7f-ba19-cfcdd841e3dd",
+                  "id": "21",
+                  "name": "Windows Service 만들기 (vs 2015) 윈도우 서비스",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://aspdotnet.tistory.com/1527",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13284215372524142",
+                  "date_last_used": "0",
+                  "guid": "b592f0b3-5124-4518-acd4-a838515c678d",
+                  "id": "22",
+                  "name": "ICODEBROKER :: [C#/COMMON] 윈도우즈 화면 잠금 여부 구하기/스크린 세이버 실행 여부 구하기",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://icodebroker.tistory.com/9207",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13284224032183990",
+                  "date_last_used": "0",
+                  "guid": "224e0b05-4524-422a-b7ba-dad015c857a4",
+                  "id": "23",
+                  "name": "GitHub - amazing-andrew/AutoHotkey.Interop: A wrapper to natively interact and embed autohotkey into your .net program.",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://github.com/amazing-andrew/AutoHotkey.Interop",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13284570097191459",
+                  "date_last_used": "0",
+                  "guid": "16360b61-be09-4f7a-9e24-1b1c9f9ecc60",
+                  "id": "24",
+                  "name": "윈도우10 표준사용자에서 관리자(Administrator) 계정으로 전환하기",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://mainia.tistory.com/5671",
+                  "visit_count": 0
+               } ],
+               "date_added": "13283355361505180",
+               "date_last_used": "0",
+               "date_modified": "13362926118016363",
+               "guid": "75de3f15-1f32-4fd5-8264-ce6269507aa4",
+               "id": "17",
+               "name": "C#",
+               "source": "unknown",
+               "type": "folder"
+            }, {
+               "children": [ {
+                  "date_added": "13340210335305241",
+                  "date_last_used": "0",
+                  "guid": "6a5def52-6c9a-4afd-8e15-47d85f982b7e",
+                  "id": "26",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "SmartSniff: Packet Sniffer - Capture TCP/IP packets on your network adapter",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://www.nirsoft.net/utils/smsniff.html",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13362933024231544",
+                  "date_last_used": "0",
+                  "guid": "2a1ac36c-d89a-4600-8091-2082286f81ac",
+                  "id": "27",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "Vultr.com",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://my.vultr.com/",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13363106209729419",
+                  "date_last_used": "0",
+                  "guid": "892103aa-ae1d-414e-9e17-a619166b032d",
+                  "id": "28",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "SSL 보안 인증서 무료 발급 받기 [Let's Encrypt] + 자동 갱신",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://foxydog.tistory.com/63",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13363362895650188",
+                  "date_last_used": "0",
+                  "guid": "400336ea-9c46-46f7-af2f-a3186536b767",
+                  "id": "29",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "putty를 사용해서 Windows에서 리눅스 (Ubuntu)로 파일 전송",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://incorea.tistory.com/123",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13363456015794184",
+                  "date_last_used": "0",
+                  "guid": "946275fa-146e-408c-8f15-757423c1b953",
+                  "id": "30",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "Console - NAVER CLOUD PLATFORM",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://console.ncloud.com/dashboard",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13363532996080099",
+                  "date_last_used": "0",
+                  "guid": "f8e80d67-031d-4326-b242-08d9ac802977",
+                  "id": "31",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "CLOVA OCR Custom API",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://api.ncloud-docs.com/docs/ai-application-service-ocr-ocr",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13363603301637962",
+                  "date_last_used": "0",
+                  "guid": "0e943675-cdc9-4f86-b34e-9bba9dee2a06",
+                  "id": "32",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "Learn Git Branching",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://learngitbranching.js.org/?locale=ko",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13364574693869278",
+                  "date_last_used": "0",
+                  "guid": "c394f56b-d5b2-4fe1-ab70-91feffa4091d",
+                  "id": "33",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "Mocking Reference | GoogleTest",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://google.github.io/googletest/reference/mocking.html",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13364658008084651",
+                  "date_last_used": "0",
+                  "guid": "47d0c6a1-4b5f-427f-938d-b7ca3438beee",
+                  "id": "34",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "Comparing .NET Mocking Libraries - Dan Clarke",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://www.danclarke.com/comparing-dotnet-mocking-libraries",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13365081855979727",
+                  "date_last_used": "0",
+                  "guid": "0191f739-af65-416f-b049-ad795f44b3db",
+                  "id": "35",
+                  "meta_info": {
+                     "power_bookmark_meta": ""
+                  },
+                  "name": "C++ gmock",
+                  "show_icon": false,
+                  "source": "sync",
+                  "type": "url",
+                  "url": "https://velog.io/@mohadang/gmock",
+                  "visit_count": 0
+               }, {
+                  "date_added": "13418661402722874",
+                  "date_last_used": "13418664526318428",
+                  "guid": "d3553473-e54c-402d-b1d5-e3fa46f9fb4c",
+                  "id": "128",
+                  "name": "Microsoft edge Black Icons – Free Download SVG, PNG, GIF",
+                  "show_icon": false,
+                  "source": "user_add",
+                  "type": "url",
+                  "url": "https://icons8.com/icons/set/microsoft-edge--black",
+                  "visit_count": 3
+               }, {
+                  "date_added": "13419189452345618",
+                  "date_last_used": "0",
+                  "guid": "0952f12d-2cce-4263-aeb8-95a72bc1882c",
+                  "id": "131",
+                  "name": "Ubuntu 22.04에 Docker 설치하는 법 (2025년도) :: 진짜 멋쟁이는 이름 짓기에 고민하지 않아!",
+                  "show_icon": false,
+                  "source": "user_add",
+                  "type": "url",
+                  "url": "https://choigochoigun.tistory.com/33",
+                  "visit_count": 1
+               }, {
+                  "date_added": "13419256158239471",
+                  "date_last_used": "0",
+                  "guid": "eb38cff9-7128-48ce-90f9-db934da27b65",
+                  "id": "134",
+                  "name": "WSL2 설치 경로 변경? 외부(D:\\) 드라.. : 네이버블로그",
+                  "show_icon": false,
+                  "source": "user_add",
+                  "type": "url",
+                  "url": "https://blog.naver.com/thepoundcake/223988930658",
+                  "visit_count": 1
+               } ],
+               "date_added": "13340210354512071",
+               "date_last_used": "0",
+               "date_modified": "13419256158239471",
+               "guid": "7681101a-f337-4f12-9ecc-d7742c3b2c90",
+               "id": "25",
+               "name": "Tool",
+               "source": "unknown",
+               "type": "folder"
+            }, {
+               "date_added": "13415461765790503",
+               "date_last_used": "13416413503624133",
+               "guid": "88b43fb2-2356-434a-9e5d-8bab1e8711c3",
+               "id": "113",
+               "name": "shadcn/vue",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://www.shadcn-vue.com/",
+               "visit_count": 10
+            }, {
+               "date_added": "13415291663407500",
+               "date_last_used": "13416068930490251",
+               "guid": "9aefc439-2a1b-4eff-8370-2efd1a99410b",
+               "id": "110",
+               "name": "Tailwind CSS",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://tailwindcss.com/docs/installation/using-vite",
+               "visit_count": 7
+            }, {
+               "date_added": "13415813888744857",
+               "date_last_used": "13416760127935916",
+               "guid": "9752073e-66e9-406c-bbf9-059702bb06f9",
+               "id": "119",
+               "name": "Icons – Lucide",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://lucide.dev/icons/",
+               "visit_count": 6
+            }, {
+               "date_added": "13284849099297152",
+               "date_last_used": "13408376190605304",
+               "guid": "3ced56e7-c1a2-4292-b8eb-61b74dd14048",
+               "id": "15",
+               "name": "Discord Developer Portal — My Applications",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://discord.com/developers/applications",
+               "visit_count": 5
+            }, {
+               "date_added": "13362408938087527",
+               "date_last_used": "13363530836841248",
+               "guid": "8f36da52-38a9-4704-94e3-9f22336b17b1",
+               "id": "16",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "ChatGPT",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://chatgpt.com/",
+               "visit_count": 0
+            }, {
+               "date_added": "13283355372192728",
+               "date_last_used": "0",
+               "guid": "b955fdc4-e156-4b40-8ee9-2a9872c5bf94",
+               "id": "36",
+               "name": "GitHub - AutoHotkey/AutoHotkey: AutoHotkey is a powerful and easy to use scripting language for desktop automation on Windows.",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://github.com/AutoHotkey/AutoHotkey",
+               "visit_count": 0
+            }, {
+               "date_added": "13283355398266593",
+               "date_last_used": "0",
+               "guid": "5ed3c77b-8b41-447b-97d1-87293d38231e",
+               "id": "37",
+               "name": "WH_MOUSE_LL의 불편(?)한 진실 :: 좋은향기's 프로그램 블로그",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://thepassion.tistory.com/174",
+               "visit_count": 0
+            }, {
+               "date_added": "13283355406042822",
+               "date_last_used": "0",
+               "guid": "8d7d1893-9774-4643-abd5-8459614faee5",
+               "id": "38",
+               "name": "LowLevelMouseProc 콜백 함수 - Win32 apps | Microsoft Docs",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://docs.microsoft.com/ko-kr/windows/win32/winmsg/lowlevelmouseproc",
+               "visit_count": 0
+            }, {
+               "date_added": "13283355410050621",
+               "date_last_used": "0",
+               "guid": "ffe215b7-a0e0-4935-8beb-c2f0c89ab81a",
+               "id": "39",
+               "name": "[Help] removing LLMHF_INJECTED",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://www.unknowncheats.me/forum/rust/322021-removing-llmhf_injected.html",
+               "visit_count": 0
+            }, {
+               "date_added": "13283355414410841",
+               "date_last_used": "0",
+               "guid": "4b235c3c-7d2b-4e3a-9c75-917701609d45",
+               "id": "40",
+               "name": "드라이버 개발 해 주실 분 구합니다 :: 2cpu, 지름이 시작되는 곳!",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://www.2cpu.co.kr/job/382",
+               "visit_count": 0
+            }, {
+               "date_added": "13283705563801377",
+               "date_last_used": "0",
+               "guid": "b3473a14-1b18-4668-a3be-78c5f39dec71",
+               "id": "41",
+               "name": "TanSanC :: [CPP] Windows Service 간단하게 만들기",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://tansanc.tistory.com/506",
+               "visit_count": 0
+            }, {
+               "date_added": "13283707067453236",
+               "date_last_used": "0",
+               "guid": "b81b87e7-72db-4538-9762-efbb43c0363c",
+               "id": "42",
+               "name": "Windows Service (윈도우 서비스) 프로그램 C++ :: 코드공장",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://code-factory.tistory.com/27",
+               "visit_count": 0
+            }, {
+               "date_added": "13283707201176732",
+               "date_last_used": "0",
+               "guid": "477ef81a-e5ed-460d-b77b-cbe7650b70b5",
+               "id": "43",
+               "name": "C++ 서비스 프로그램 제작 : 네이버 블로그",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=bmk5133&logNo=80090120069",
+               "visit_count": 0
+            }, {
+               "date_added": "13283707226841180",
+               "date_last_used": "0",
+               "guid": "77b2da83-af27-419a-b9ee-4ef860f41598",
+               "id": "44",
+               "name": "[C/C++/MFC] 윈도우 서비스 생성/시작/중지/삭제",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://duzi077.tistory.com/23",
+               "visit_count": 0
+            }, {
+               "date_added": "13283880182331412",
+               "date_last_used": "0",
+               "guid": "c1e92969-a0b0-466e-b246-694ec412367c",
+               "id": "45",
+               "name": "Simple Windows Service in C++ - CodeProject",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://www.codeproject.com/Articles/499465/Simple-Windows-Service-in-Cplusplus",
+               "visit_count": 0
+            }, {
+               "date_added": "13283880950277938",
+               "date_last_used": "0",
+               "guid": "e04c13d2-a0d3-428d-bcd0-a0a76ae61157",
+               "id": "46",
+               "name": "ATL 서비스 | Microsoft Docs",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://docs.microsoft.com/ko-kr/cpp/atl/atl-services?view=msvc-170",
+               "visit_count": 0
+            }, {
+               "date_added": "13283881402442267",
+               "date_last_used": "0",
+               "guid": "667a6a12-ffab-4b62-9cef-a9fde0be361c",
+               "id": "47",
+               "name": "Windows Service (ATL) - Programmer All",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://programmerall.com/article/2928294279/",
+               "visit_count": 0
+            }, {
+               "date_added": "13284055338848649",
+               "date_last_used": "0",
+               "guid": "b64c2a38-4267-4088-a554-4a4c6ca67b71",
+               "id": "48",
+               "name": "시작되지 _ATL_NO_COM_SUPPORT ATL 서비스 - Visual C++ | Microsoft Docs",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://docs.microsoft.com/ko-kr/troubleshoot/cpp/atl-service-not-start",
+               "visit_count": 0
+            }, {
+               "date_added": "13284216312803349",
+               "date_last_used": "0",
+               "guid": "9a3ceb3b-370f-41f7-801a-2a2c4f2d53ac",
+               "id": "49",
+               "name": "windows - Windows에서 GetDesktopWindow와 OpenInputDesktop API의 차이점은 무엇입니까? - IT 툴 넷",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://pythonq.com/so/windows/628015",
+               "visit_count": 0
+            }, {
+               "date_added": "13284217911196891",
+               "date_last_used": "0",
+               "guid": "50f90b0a-081f-40a5-a0e3-41369dd30c15",
+               "id": "50",
+               "name": "[C/C++/MFC] 윈도우 서비스에서 응용 프로그램 실행하기(CreateProcessAsUser)",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://duzi077.tistory.com/25",
+               "visit_count": 0
+            }, {
+               "date_added": "13284220137925994",
+               "date_last_used": "0",
+               "guid": "25e99c00-c281-471b-b29b-a4b1937d5cc9",
+               "id": "51",
+               "name": "Software Engineer :: Sending a mouse input 마우스 입력 보내기",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://s-engineer.tistory.com/129",
+               "visit_count": 0
+            }, {
+               "date_added": "13284397462136660",
+               "date_last_used": "0",
+               "guid": "c3e8dcd9-92b6-48c1-97ca-0254a43fe042",
+               "id": "52",
+               "name": "AutoHotkey Beginner Tutorial",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "http://autohotkeykr.sourceforge.net/docs/Tutorial.htm#s31",
+               "visit_count": 0
+            }, {
+               "date_added": "13284555970708742",
+               "date_last_used": "0",
+               "guid": "89c7546f-f202-4dfb-971c-884aba37de57",
+               "id": "53",
+               "name": "Move Mouse - Snippets",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://sites.google.com/a/windandkite.co.uk/movemouse/help/settings/actions/powershell-script/snippets",
+               "visit_count": 0
+            }, {
+               "date_added": "13284850378740683",
+               "date_last_used": "0",
+               "guid": "49d22701-192b-4b70-8b36-f9bf85eda632",
+               "id": "54",
+               "name": "Discord Developer Portal — My Applications",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://discord.com/developers/applications/923918905951535116/oauth2/general",
+               "visit_count": 0
+            }, {
+               "date_added": "13284850392164983",
+               "date_last_used": "0",
+               "guid": "cb859165-e92d-4dd7-8f65-a6ed8b6dc663",
+               "id": "55",
+               "name": "Discord Developer Portal — Documentation — Intro",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://discord.com/developers/docs/intro",
+               "visit_count": 0
+            }, {
+               "date_added": "13290583454567663",
+               "date_last_used": "0",
+               "guid": "ef339619-ded0-4cb5-9a8d-be739840692b",
+               "id": "56",
+               "name": ":: [펌] 프로세스의 메모리안에 접근하고 읽고 쓰기.",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://debugjung.tistory.com/entry/%ED%8E%8C-%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%9D%98-%EB%A9%94%EB%AA%A8%EB%A6%AC%EC%95%88%EC%97%90-%EC%A0%91%EA%B7%BC%ED%95%98%EA%B3%A0-%EC%9D%BD%EA%B3%A0-%EC%93%B0%EA%B8%B0",
+               "visit_count": 0
+            }, {
+               "date_added": "13318235872152313",
+               "date_last_used": "0",
+               "guid": "e7821654-3fd6-457a-947d-21ee247d93a4",
+               "id": "57",
+               "name": "Discord 봇: 생성하고 서버에 추가하는 방법 | AppMaster",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://appmaster.io/ko/blog/discord-bos-saengseonghago-seobeoe-cugahaneun-bangbeob",
+               "visit_count": 0
+            }, {
+               "date_added": "13318250009409023",
+               "date_last_used": "0",
+               "guid": "5aa54dec-de46-4e25-84ab-044f2e4ce40c",
+               "id": "58",
+               "name": "그래도 개발할 때가 좋았다!! :: [C#] MAC Address 가져오기",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://brandon-dev.tistory.com/12",
+               "visit_count": 0
+            }, {
+               "date_added": "13340209646230450",
+               "date_last_used": "0",
+               "guid": "248499fe-2f57-4bd3-9fe9-9a9a951036b7",
+               "id": "59",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "실제 프로그램 코드에 hooking해보기",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://anhyoungbin.tistory.com/213",
+               "visit_count": 0
+            }, {
+               "date_added": "13340209742808744",
+               "date_last_used": "0",
+               "guid": "be65fa1c-faf0-4c58-82c2-30d3678dd8ab",
+               "id": "60",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "API Hooking - '스텔스' 프로세스 (3) :: 리버스코어 ReverseCore",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://reversecore.com/67?category=216978",
+               "visit_count": 0
+            }, {
+               "date_added": "13343925999021289",
+               "date_last_used": "0",
+               "guid": "ccbcd237-1204-4008-98d6-ee3e12f745d6",
+               "id": "61",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "DBI - Frida 를 이용한 DBI(winsock hooking)",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://hyunmini.tistory.com/94",
+               "visit_count": 0
+            }, {
+               "date_added": "13360254547137465",
+               "date_last_used": "0",
+               "guid": "712e8cfe-8c61-4d95-a77b-575e57ae38de",
+               "id": "62",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "[WF] 윈폼프로젝트 폼 숨긴채 실행하기",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://jfri13.tistory.com/43",
+               "visit_count": 0
+            }, {
+               "date_added": "13360256134558253",
+               "date_last_used": "0",
+               "guid": "9337330a-4793-4139-8a1b-bc9e9a083077",
+               "id": "63",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "명월 일지 :: [C#] Window Form을 생성하지 않고 Window Control를 사용하는 방법",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://nowonbun.tistory.com/750",
+               "visit_count": 0
+            }, {
+               "date_added": "13360257547886478",
+               "date_last_used": "0",
+               "guid": "3ec9b606-6582-49ee-a5eb-b365d21795cc",
+               "id": "64",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "[셀레니움/Selenium, C#] C#에서 셀레니움을 사용하는 방법 총정리",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://luckygg.tistory.com/248#google_vignette",
+               "visit_count": 0
+            }, {
+               "date_added": "13361379451431974",
+               "date_last_used": "0",
+               "guid": "c47668fc-9b89-4752-b01f-fa960fa956c7",
+               "id": "65",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "[AWS] 💰 프리티어 요금 폭탄 방지 💸 - 무료 사용량 정리",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://inpa.tistory.com/entry/AWS-%F0%9F%92%B0-%ED%94%84%EB%A6%AC%ED%8B%B0%EC%96%B4-%EC%9A%94%EA%B8%88-%ED%8F%AD%ED%83%84-%EB%B0%A9%EC%A7%80-%F0%9F%92%B8-%EB%AC%B4%EB%A3%8C-%EC%82%AC%EC%9A%A9%EB%9F%89-%EC%A0%95%EB%A6%AC",
+               "visit_count": 0
+            }, {
+               "date_added": "13361458826661271",
+               "date_last_used": "13409404528455180",
+               "guid": "6e726552-1793-4989-9738-bf23d6ad19b9",
+               "id": "66",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Kakao Developers",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://developers.kakao.com/",
+               "visit_count": 1
+            }, {
+               "date_added": "13361552297730665",
+               "date_last_used": "0",
+               "guid": "2e26bf97-b858-410e-98b9-e8bf2aa50617",
+               "id": "67",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "06. 미리 연결한 크롬 드라이버로 연결하기 : 네이버 블로그",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://blog.naver.com/eddyson/222623132117",
+               "visit_count": 0
+            }, {
+               "date_added": "13361980228739877",
+               "date_last_used": "0",
+               "guid": "ae568955-8231-4497-9dd2-98ed7cc47e48",
+               "id": "68",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "[C++] MinGW 설치하기 (g++ 컴파일러 Windows 에서 사용하기) gcc compiler 윈도우 리눅스 linux 환경 msys 설정 sourceforge : 네이버 블로그",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://m.blog.naver.com/dorergiverny/223032334186",
+               "visit_count": 0
+            }, {
+               "date_added": "13362068038135256",
+               "date_last_used": "0",
+               "guid": "2e7a42ff-c3b4-4158-9fc0-c63d620da692",
+               "id": "69",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Visual Studio Code setup for C++ « IanFlow",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://goodgodgd.github.io/ian-flow/archivers/vscode-tutorial",
+               "visit_count": 0
+            }, {
+               "date_added": "13362242980170194",
+               "date_last_used": "0",
+               "guid": "c8323675-e033-4672-bdcb-2b91ba35a4de",
+               "id": "70",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "가상 서버(클라우드). Vultr을 도입해보세요. : 네이버 블로그",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://m.blog.naver.com/cooltime7777/221309629299",
+               "visit_count": 0
+            }, {
+               "date_added": "13362243618136993",
+               "date_last_used": "0",
+               "guid": "043f7855-b29b-4bd7-bdbb-8ca9245ccae8",
+               "id": "71",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Vultr Kubernetes Engine 사용기 — 생존과 성장 사이",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://blog.haenu.com/12",
+               "visit_count": 0
+            }, {
+               "date_added": "13362243944971915",
+               "date_last_used": "0",
+               "guid": "57f1642b-b024-4cb2-8aea-2b36d23062be",
+               "id": "72",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "Supabase C# Client",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://supabase.com/docs/reference/csharp/initializing",
+               "visit_count": 0
+            }, {
+               "date_added": "13362243959434503",
+               "date_last_used": "0",
+               "guid": "04e5f41c-7fde-4601-a323-600702fe1a36",
+               "id": "73",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "[Supabase] 무료 요금제 사용시 주의사항 및 팁",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://pusha.tistory.com/entry/Supabase-%EB%AC%B4%EB%A3%8C-%EC%9A%94%EA%B8%88%EC%A0%9C-%EC%82%AC%EC%9A%A9%EC%8B%9C-%EC%A3%BC%EC%9D%98%EC%82%AC%ED%95%AD-%EB%B0%8F-%ED%8C%81",
+               "visit_count": 0
+            }, {
+               "date_added": "13362502326356871",
+               "date_last_used": "0",
+               "guid": "851e5edd-305e-419b-9115-798f72a923aa",
+               "id": "74",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "c 라이브러리 파일, gcc 컴파일 - nicewoong",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://nicewoong.github.io/development/2018/02/24/c-library-gcc-compile/",
+               "visit_count": 0
+            }, {
+               "date_added": "13362589029579144",
+               "date_last_used": "0",
+               "guid": "22e37d56-7b9b-4430-8b39-5ee794db52f3",
+               "id": "75",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "VULTR 벌쳐 가입부터 서버 구매까지",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://sw100.dasfl.com/entry/VULTR-%EB%B2%8C%EC%B3%90-%EA%B0%80%EC%9E%85%EB%B6%80%ED%84%B0-%EC%84%9C%EB%B2%84-%EA%B5%AC%EB%A7%A4%EA%B9%8C%EC%A7%80",
+               "visit_count": 0
+            }, {
+               "date_added": "13362756435310967",
+               "date_last_used": "0",
+               "guid": "75d3bf84-13af-4036-92e2-fe195f7f06e8",
+               "id": "76",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "SSH 키 생성 방법 윈도우 사용자 (MobaXterm, puTTY)",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://jioscon.com/ssh-%ED%82%A4-%EC%83%9D%EC%84%B1-%EB%B0%A9%EB%B2%95/",
+               "visit_count": 0
+            }, {
+               "date_added": "13362759378383168",
+               "date_last_used": "0",
+               "guid": "9fa0b50e-7eba-4bfb-9a4e-31811e9e91cc",
+               "id": "77",
+               "meta_info": {
+                  "power_bookmark_meta": ""
+               },
+               "name": "[linux] 우분투 root 비밀번호 변경하기 — 과거의 나를 위해",
+               "show_icon": false,
+               "source": "sync",
+               "type": "url",
+               "url": "https://pinggoopark.tistory.com/85",
+               "visit_count": 0
+            }, {
+               "date_added": "13404637463523909",
+               "date_last_used": "0",
+               "guid": "8dd1db04-824c-44b0-b76e-0e9e7c7d7c77",
+               "id": "78",
+               "name": "[OpenCV][C++] 최신 OpenCV 설.. : 네이버블로그",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://blog.naver.com/dorergiverny/223057902921",
+               "visit_count": 1
+            }, {
+               "date_added": "13406562804947806",
+               "date_last_used": "13408016001300032",
+               "guid": "42cef0e8-2757-4cc8-8b86-eddd75620df4",
+               "id": "79",
+               "name": "NAVER CLOUD PLATFORM 네이버 클라우드 플랫폼",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://www.ncloud.com/?language=ko-KR",
+               "visit_count": 6
+            }, {
+               "date_added": "13406997177110383",
+               "date_last_used": "0",
+               "guid": "daf80b4f-e4f0-441a-9c83-fb9442323b6a",
+               "id": "101",
+               "name": "Discord Social SDK | Discord Social SDK",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://discord.com/developers/docs/social-sdk/index.html",
+               "visit_count": 1
+            }, {
+               "date_added": "13406997892508375",
+               "date_last_used": "13408897029667639",
+               "guid": "25a85010-081b-40a9-beba-fd9a26cffb6f",
+               "id": "102",
+               "name": "API Documentation | Discord.Net Documentation",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://docs.discordnet.dev/api/index.html",
+               "visit_count": 4
+            }, {
+               "date_added": "13407085553547786",
+               "date_last_used": "0",
+               "guid": "b1fe98ab-abbe-4290-b331-000c84729fa1",
+               "id": "105",
+               "name": "Window에서 Linux로 파일 전송(putty)",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://not-to-be-reset.tistory.com/4",
+               "visit_count": 1
+            }, {
+               "date_added": "13415547980783059",
+               "date_last_used": "0",
+               "guid": "d5da17a7-1e13-45df-b5bf-b731c191f209",
+               "id": "116",
+               "name": "VSCode, WSL \u003C-> 윈도우, Git & 줄 바꿈 문자 (CRLF/LF) 문제 해결 — 김치는 바보다.",
+               "show_icon": false,
+               "source": "user_add",
+               "type": "url",
+               "url": "https://newkimjiwon.tistory.com/512",
+               "visit_count": 1
+            } ],
+            "date_added": "13283355361504476",
+            "date_last_used": "0",
+            "date_modified": "13416213621513599",
+            "guid": "0884ffeb-268c-4edb-9052-484310b1e76b",
+            "id": "14",
+            "name": "개발",
+            "source": "unknown",
+            "type": "folder"
+         }, {
+            "date_added": "13403110528992030",
+            "date_last_used": "13408351156461533",
+            "guid": "a4f7f808-9f83-4b6f-9eb0-a5e7c555b760",
+            "id": "80",
+            "name": "아이템매니아",
+            "show_icon": false,
+            "source": "user_copy",
+            "type": "url",
+            "url": "http://www.itemmania.com/",
+            "visit_count": 5
+         }, {
+            "date_added": "13403105650827542",
+            "date_last_used": "13418916728437802",
+            "guid": "1cba497f-4bf6-4ddc-b8ec-f1c0e3b477f2",
+            "id": "81",
+            "name": "Google Sheets",
+            "show_icon": false,
+            "source": "user_add",
+            "type": "url",
+            "url": "https://docs.google.com/spreadsheets/u/0/",
+            "visit_count": 25
+         }, {
+            "date_added": "13259576094344892",
+            "date_last_used": "0",
+            "guid": "1fe8a0e4-081c-4a20-8436-6de7a1ba08be",
+            "id": "82",
+            "name": "DS여가포인트",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "http://ds.welstorymall.com/",
+            "visit_count": 0
+         }, {
+            "date_added": "13264166522984167",
+            "date_last_used": "0",
+            "guid": "5c2a3da2-5cfa-4d00-9c78-59f2c9d7fd70",
+            "id": "83",
+            "name": "Downloads - Visual Studio Subscriptions Portal",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://my.visualstudio.com/downloads",
+            "visit_count": 0
+         }, {
+            "date_added": "13310363665917245",
+            "date_last_used": "13310363687379853",
+            "guid": "3293df63-15b4-476e-bf42-8e31c72d4898",
+            "id": "84",
+            "name": "코드패스",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "http://www.codepass.co.kr/",
+            "visit_count": 0
+         }, {
+            "date_added": "13315576159035974",
+            "date_last_used": "13349684636735863",
+            "guid": "cc9845d9-643a-4b9b-a963-60154ff0922f",
+            "id": "85",
+            "name": "S/W EXPERT ACADEMY",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://out.swexpertacademy.samsung.com/",
+            "visit_count": 0
+         }, {
+            "date_added": "13257001681831010",
+            "date_last_used": "0",
+            "guid": "74a33ccc-69e4-4890-8769-620d6952938c",
+            "id": "86",
+            "name": "라이젠 내장 그래픽(vega 8/11) 성능 제대로 내는 법 - 포텐 터짐 최신순 - 에펨코리아",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://www.fmkorea.com/best/1995874479",
+            "visit_count": 0
+         }, {
+            "date_added": "13268842397933281",
+            "date_last_used": "0",
+            "guid": "63b356d6-0b05-4dbb-9417-d1abc5124d2e",
+            "id": "87",
+            "name": "[Xcode] Xcode에서 C++ 사용하기. : 네이버 블로그",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://m.blog.naver.com/kbsu147/221852142796",
+            "visit_count": 0
+         }, {
+            "date_added": "13270135727649293",
+            "date_last_used": "0",
+            "guid": "9a934f69-cebc-495e-b79d-bbe37da8cb7a",
+            "id": "88",
+            "name": "오딘: 발할라 라이징 - Daum 카페",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://cafe.daum.net/odin/_rec",
+            "visit_count": 0
+         }, {
+            "date_added": "13285764154002518",
+            "date_last_used": "0",
+            "guid": "d9db4129-34df-4de8-9733-a986a5d6bd75",
+            "id": "89",
+            "name": "건강기능식품 | (주)아너스팜",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://honorspharm.com/shop.php?goPage=GoodDetail&g_code=20180426153009929&cat_no=24&offset=",
+            "visit_count": 0
+         }, {
+            "date_added": "13295242237868055",
+            "date_last_used": "13416758684785573",
+            "guid": "1f1f612c-e32a-417c-a627-9ddf62fa522c",
+            "id": "90",
+            "name": "석관시장 떡볶이 시떡",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://www.sidduk.co.kr/main/index",
+            "visit_count": 1
+         }, {
+            "date_added": "13326074420674979",
+            "date_last_used": "13406338568225030",
+            "guid": "9b0b63ad-93a0-6bb7-800c-4ab39dbc0bb0",
+            "id": "91",
+            "name": "쿠팡!",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://admin.smartbridge.co.kr/bookmark.php?c=MzA=",
+            "visit_count": 4
+         }, {
+            "date_added": "13326903983896841",
+            "date_last_used": "0",
+            "guid": "f6298665-8245-454d-b3fb-cdf2fc351efe",
+            "id": "93",
+            "name": "테일스타 - 재밌는 인터넷 놀이터",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://tailstar.net/",
+            "visit_count": 0
+         }, {
+            "date_added": "13351698569660158",
+            "date_last_used": "0",
+            "guid": "c029b5aa-0750-4efa-b41b-5a0310d9707a",
+            "id": "94",
+            "name": "앱",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "chrome://apps/",
+            "visit_count": 0
+         }, {
+            "date_added": "13360049776371432",
+            "date_last_used": "0",
+            "guid": "9342662c-adaf-4bc8-a50e-b55b56b1f935",
+            "id": "96",
+            "name": "아고다 공식 사이트 | 예약 무료 취소 & 할인 특가 | 2백만 개 이상의 숙소",
+            "show_icon": false,
+            "source": "sync",
+            "type": "url",
+            "url": "https://admin.smartbridge.co.kr/bookmark.php?c=NDk=",
+            "visit_count": 0
+         } ],
+         "date_added": "13401797983897219",
+         "date_last_used": "0",
+         "date_modified": "13404637463523909",
+         "guid": "0bc5d13f-2cba-5d74-951f-3f233fe6c908",
+         "id": "1",
+         "name": "즐겨찾기 모음",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13401797983897219",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "82b081ec-3dd3-529c-8475-ab6c344590dd",
+         "id": "97",
+         "name": "다른 즐겨찾기",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13401797983897219",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "4cf2e351-0e85-532b-bb37-df045d8f8d0f",
+         "id": "98",
+         "name": "모바일 즐겨찾기",
+         "source": "unknown",
+         "type": "folder"
+      },
+      "workspaces_v2": {
+         "children": [  ],
+         "date_added": "13414980526346279",
+         "date_last_used": "0",
+         "date_modified": "0",
+         "guid": "75aa6670-344f-549d-b742-660f029506ab",
+         "id": "107",
+         "name": "작업 영역",
+         "source": "unknown",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}
