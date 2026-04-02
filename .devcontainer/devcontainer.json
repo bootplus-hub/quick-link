@@ -55,6 +55,9 @@
   // 컨테이너가 처음 생성된 직후 자동으로 의존성을 설치합니다.
   "postCreateCommand": "npm install",
 
+  // 컨테이너가 '켜질 때마다 매번' 실행 (임시 폴더 권한 자동 부여)
+  "postStartCommand": "sudo chown node:node /run/user/1000 && sudo mkdir -p /run/user/1000/wine && sudo chown node:node /run/user/1000/wine && sudo chmod 700 /run/user/1000 && sudo chmod 700 /run/user/1000/wine",
+
   // 컨테이너 접속 시 사용할 기본 사용자
   "remoteUser": "node"
 }

@@ -6,6 +6,7 @@
     "bradlc.vscode-tailwindcss", // Tailwind CSS 자동 완성 및 하이라이팅
     "ms-vscode.vscode-typescript-next", // 최신 TS 지원
     "editorconfig.editorconfig", // EditConfig
+    "idleberg.nsis", // NSIS
     "usernamehw.errorlens" // Error Lens
   ]
 }

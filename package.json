@@ -1,12 +1,12 @@
 {
   "name": "quick-link",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build && electron-builder",
-    "build:iss": "iscc /Odist-build installer.iss",
+    "build:win64": "vue-tsc && vite build && electron-builder --win --x64",
     "rebuild": "electron-rebuild -f -w better-sqlite3",
     "preview": "vite preview",
     "postinstall": "electron-builder install-app-deps && sudo chown root:root ./node_modules/electron/dist/chrome-sandbox && sudo chmod 4755 ./node_modules/electron/dist/chrome-sandbox"
@@ -57,10 +57,17 @@
       "output": "dist-build"
     },
     "win": {
-      "target": [
-        "dir"
-      ],
+      "target": "nsis",
       "icon": "public/icon-main.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "shortcutName": "QuickLink",
+      "deleteAppDataOnUninstall": false,
+      "include": "installer.nsh"
     },
     "files": [
       "dist/**/*",
