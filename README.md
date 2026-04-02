@@ -29,9 +29,8 @@ A desktop utility designed to streamline your web navigation by centralizing and
   - [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
   - [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens)
-  - [Inno Setup](https://marketplace.visualstudio.com/items?itemName=Chouzz.vscode-innosetup) + [Pascal](https://marketplace.visualstudio.com/items?itemName=alefragnani.pascal)
+  - [NSIS](https://marketplace.visualstudio.com/items?itemName=idleberg.nsis)
 - [Node.js](https://nodejs.org/) (v24.13.0)
-- [Inno Setup](https://jrsoftware.org/isinfo.php)
 
 ## License
 
